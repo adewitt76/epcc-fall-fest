@@ -27,6 +27,12 @@ public class MonsterCameraFragment extends Fragment {
 		private SurfaceView mSurfaceView;
 		private View mProgressContainer;
 		
+		/*
+		 * The following creates a ShutterCallback which implements the ShutterCallback
+		 * interface. This is called close to the moment when the camera captures the
+		 * image(before it processes the picture). Used here to trigger the progress
+		 * indicator but also can be used to do things like play sounds.
+		 */
 		private Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
 			@Override
 			public void onShutter() {
@@ -34,6 +40,15 @@ public class MonsterCameraFragment extends Fragment {
 				mProgressContainer.setVisibility(View.VISIBLE);
 			}
 		};
+		
+		/*
+		 * The following creates a PictureCallback which implements the camera's 
+		 * PictureCallback interface. This is called after the picture processes the
+		 * data into a usable format. Here I am capturing the callback that is
+		 * sent when the JPEG image is ready. The picture is sent in a byte array
+		 * (byte[] data) and written to a file named newPhoto.jpg and stored in the 
+		 * programs sand box(a part of the app that is in accessible to the user).
+		 */
 		private Camera.PictureCallback mJpegCallback = new Camera.PictureCallback() {
 			@Override
 			public void onPictureTaken(byte[] data, Camera camera) {
@@ -156,7 +171,14 @@ public class MonsterCameraFragment extends Fragment {
 		}
 		
 		
-		
+		/**
+		 * This method tries to match the best fit size in the list of sizes
+		 * with the given width and height.
+		 * @param sizes a list of supported sizes
+		 * @param width the width that needs to be matched
+		 * @param height the height that needs to be matched
+		 * @return a Size that is the best fit
+		 */
 		private Size getBestSupportedSize(List<Size> sizes, int width, int height){
 			Size bestSize = sizes.get(0);
 			int largestArea = bestSize.width * bestSize.height;
