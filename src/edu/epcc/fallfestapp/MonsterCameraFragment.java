@@ -129,11 +129,19 @@ public class MonsterCameraFragment extends Fragment {
 					
 					// The surface changed size - update preview size
 					Camera.Parameters parameters = mCamera.getParameters();
-					Size s = getBestSupportedSize(parameters.getSupportedPreviewSizes(), width, height);
-					parameters.setPreviewSize(s.width, s.height);
 					
-					// update picture size
+					// Set the flash to be on since the event happens at night
+					parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+					
+					// set up the preview and picture sizes
+					Log.i(TAG,"Surface - Width: "+width+" Height: "+height);
+					Log.i(TAG,"****** Choosing Preview Size ********");
+					Size s = getOptimalPreviewSize(parameters.getSupportedPreviewSizes(), width, height);
+					Log.i(TAG,"Preview Size - Width: "+s.width+" Height: "+s.height);
+					parameters.setPreviewSize(s.width, s.height);
+					Log.i(TAG,"****** Choosing Picture Size ********");
 					s = getBestSupportedSize(parameters.getSupportedPictureSizes(), width, height);
+					Log.i(TAG,"Picture Size - Width: "+s.width+" Height: "+s.height);
 					parameters.setPictureSize(s.width, s.height);
 					
 					mCamera.setParameters(parameters);
@@ -183,10 +191,28 @@ public class MonsterCameraFragment extends Fragment {
 			Size bestSize = sizes.get(0);
 			int largestArea = bestSize.width * bestSize.height;
 			for(Size s : sizes){
+				Log.i(TAG, "Supported sizes - Width: " + s.width + " Height: " + s.height);
+			}
+			for(Size s : sizes){
 				int area = s.width * s.height;
 				if(area > largestArea){
 					bestSize = s;
 					largestArea = area;
+				}
+			}
+			return bestSize;
+		}
+		
+		private Size getOptimalPreviewSize(List<Size> sizes, int width, int height){
+			Size bestSize = sizes.get(0);
+			int previewArea = width * height;
+			for(Size s : sizes){
+				Log.i(TAG, "Supported sizes - Width: " + s.width + " Height: " + s.height);
+			}
+			for(Size s : sizes){
+				int area = s.width * s.height;
+				if(area > previewArea){
+					bestSize = s;
 				}
 			}
 			return bestSize;
