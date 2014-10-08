@@ -2,7 +2,6 @@ package edu.epcc.epccfallfestapp;
 
 
 import java.util.UUID;
-//branch test
 public class Game{
 	
 	private UUID mId;
