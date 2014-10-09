@@ -21,7 +21,6 @@ import android.widget.TextView;
 public class GameFragment extends Fragment{
 	
 	private static final String TAG = "MonsterFragment";
-	private static final int REQUEST_PHOTO = 0;
 	
 	private final Game mGame = new Game();
 	private ImageView mPhotoView;
@@ -45,8 +44,7 @@ public class GameFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(getActivity(), MonsterCameraActivity.class);
-				startActivityForResult(i, REQUEST_PHOTO);
+				// TODO: implement Scanner
 			}
 		});
 		
@@ -68,15 +66,7 @@ public class GameFragment extends Fragment{
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
-		if(resultCode != Activity.RESULT_OK) return;
-		
-		if(requestCode == REQUEST_PHOTO){
-			String filename = data.getStringExtra(MonsterCameraFragment.EXTRA_PHOTO_FILENAME);
-			if(filename != null){
-				mGame.updatePhoto(new Photo(filename));
-				showPhoto();
-			}
-		}
+		// TODO: implement Scanner Results
 	}
 	
 	@Override
