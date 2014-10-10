@@ -1,94 +1,72 @@
 package edu.epcc.fallfestapp;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
-import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class GameFragment extends Fragment{
 	
 	private static final String TAG = "MonsterFragment";
 	
 	private final Game mGame = new Game();
-	private ImageView mPhotoView;
+	private TextView mBarcodeTextView;
 	private Button mPhotoButton;
 	private TextView mHintText;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	IntentIntegrator scanIntegrator;
 		
-	}
-	
 	@Override
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD) 
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
+		
 		getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		
 		View v = inflater.inflate(R.layout.fragment_game, parent, false);
+		
+		mBarcodeTextView = (TextView)v.findViewById(R.id.barcode_textView);
+		
+		scanIntegrator = new IntentIntegrator(this);
 		
 		mPhotoButton = (Button)v.findViewById(R.id.photoButton);
 		mPhotoButton.setOnClickListener(new View.OnClickListener() {
-			
+		
 			@Override
 			public void onClick(View v) {
-				// TODO: implement Scanner
+				if(v.getId()==R.id.photoButton){
+					scanIntegrator.initiateScan();
+				}
 			}
 		});
-		
-		// Check to make sure there is an available camera and disable if not.
-		PackageManager pm = getActivity().getPackageManager();
-		boolean hasACamera = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) ||
-				pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT) || 
-				(Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && Camera.getNumberOfCameras()
-				  > 0);
-		if(!hasACamera) mPhotoButton.setEnabled(false);
-		
+				
 		mHintText =(TextView)v.findViewById(R.id.hintText);
 		mHintText.setText(mGame.getCurrentHint().getHint());
-		
-		mPhotoView = (ImageView)v.findViewById(R.id.monster_imageView);
 		
 		return v;
 	}
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
-		// TODO: implement Scanner Results
-	}
-	
-	@Override
-	public void onStart() {
-		super.onStart();
-		showPhoto();
-	}
-	
-	@Override
-	public void onStop(){
-		super.onStop();
-		PictureUtils.cleanImageView(mPhotoView);
-	}
-	
-	private void showPhoto(){
-		Photo p = mGame.getCurrentPhoto();
-		BitmapDrawable b = null;
-		if(p != null){
-			String path = getActivity().getFileStreamPath(p.getFilename()).getAbsolutePath();
-			b = PictureUtils.getScaledDrawable(getActivity(), path);
+		IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+		if(scanningResult != null){
+			String scanContent = scanningResult.getContents();
+			String scanFormat = scanningResult.getFormatName();
+			mBarcodeTextView.setText("Content: "+scanContent+"\nFormat: "+scanFormat+"\n");
+			
+		} else{
+			Toast toast = Toast.makeText(getActivity().getApplicationContext(), "No scan data received", Toast.LENGTH_SHORT);
+			toast.show();
 		}
-		mPhotoView.setImageDrawable(b);
 	}
-
+	
 }

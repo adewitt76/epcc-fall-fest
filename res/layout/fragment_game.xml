@@ -35,15 +35,14 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/monster_imageView"
+    <TextView
+        android:id="@+id/barcode_textView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_weight="0.68"
         android:scaleType="fitCenter"
         android:background="@android:color/darker_gray"
-        android:cropToPadding="true"
-        android:contentDescription="@string/desc" />
+        android:cropToPadding="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
