@@ -9,9 +9,7 @@ public class Game{
 
 	
 	private Hint mCurrentHint;
-	private Photo mCurrentPhoto;
-	private Photo mNewPhoto;
-	
+
 	public Game(){
 		mId = UUID.randomUUID();
 		
@@ -22,11 +20,6 @@ public class Game{
 		
 	}
 	
-	public void updatePhoto(Photo newPhoto){
-		// a loop through function for testing
-		mCurrentPhoto = newPhoto;
-		mNewPhoto = mCurrentPhoto;
-	}
 
 	public UUID getId() {
 		return mId;
@@ -40,12 +33,4 @@ public class Game{
 		this.mCurrentHint = mCurrentHint;
 	}
 
-	public Photo getCurrentPhoto() {
-		return mCurrentPhoto;
-	}
-
-	public void setCurrentPhoto(Photo mCurrentPhoto) {
-		this.mCurrentPhoto = mCurrentPhoto;
-	}
-	
 }

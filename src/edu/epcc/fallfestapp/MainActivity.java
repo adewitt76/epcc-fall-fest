@@ -1,3 +1,13 @@
+
+/*
+ * EPCC Fall Festival Android app
+ * This application is designed as a scavenger hunt game to 
+ * be deployed and played at the EPCC Fall Festival.
+ * 
+ * File: MainActivity.java
+ * Author: Aaron DeWitt
+ */
+
 package edu.epcc.fallfestapp;
 
 import android.support.v4.app.Fragment;
