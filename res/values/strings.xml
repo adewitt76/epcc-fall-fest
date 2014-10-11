@@ -8,7 +8,7 @@
     <string name="leader_1">Leader one spot</string>
     <string name="leader_2">Leader two spot</string>
     <string name="leader_3">Leader three spot</string>
-    <string name="photo_button">Scan a Monster!!!</string>
+    <string name="photo_button">Scan!!!</string>
     <string name="action_settings">Settings</string>
 
 </resources>

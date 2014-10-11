@@ -31,9 +31,9 @@ public class GameFragment extends Fragment{
 	private static final String TAG = "MonsterFragment";
 	
 	// Bar code ID constants.
-	private static final String BC_VAMPIRE = "edu.epcc.fall-fest dracula";
-	private static final String BC_MUMMY = "edu.epcc.fall-fest Mummy";
-	private static final String BC_GHOST = "edu.epcc.fall-fest Ghost";
+	public static final String BC_VAMPIRE = "edu.epcc.fall-fest dracula";
+	public static final String BC_MUMMY = "edu.epcc.fall-fest Mummy";
+	public static final String BC_GHOST = "edu.epcc.fall-fest Ghost";
 	
 	// initialization of views pertaining to this fragment
 	private final Game mGame = new Game();
@@ -73,15 +73,14 @@ public class GameFragment extends Fragment{
 		return v;
 	}
 	
+	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
 		IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 		if(scanningResult == null) return;
 			
 		// Fragments and FragmentManager initialization
-		Fragment displayFragment = null;
-		FragmentTransaction transaction;
-			
+		Fragment displayFragment = null;	
 		
 		String scanContent = scanningResult.getContents();
 		String scanFormat = scanningResult.getFormatName();
@@ -91,21 +90,25 @@ public class GameFragment extends Fragment{
 		if(scanContent.equals(BC_VAMPIRE)){ 
 			resourceID = R.drawable.vampire;
 			displayFragment = new ExampleFragment();
-			
+			mGame.update(BC_VAMPIRE);
 			}
-		else if(scanContent.equals(BC_MUMMY)) resourceID = R.drawable.mummy;
-		else if(scanContent.equals(BC_GHOST)) resourceID = R.drawable.ghosts;
+		else if(scanContent.equals(BC_MUMMY)){ 
+			resourceID = R.drawable.mummy;
+			mGame.update(BC_MUMMY);
+		}
+		else if(scanContent.equals(BC_GHOST)){
+			resourceID = R.drawable.ghosts;
+			mGame.update(BC_GHOST);
+		}
 		else resourceID = R.drawable.monster_hunt_title;
+		
+		// TODO: Update all display variables
+		mHintText.setText(mGame.getCurrentHint().getHint());
 		
 		mMonsterImageView.setImageDrawable(PictureUtils.getScaledDrawable(getActivity(), getResources(), resourceID));
 		
-		if(displayFragment != null){
-			transaction = getFragmentManager().beginTransaction();
-			transaction.replace(R.id.mainContainer, displayFragment);
-			transaction.addToBackStack(null);
-			transaction.commit();
-		}
-
+		if(displayFragment != null)
+			getFragmentManager().beginTransaction().replace(R.id.mainContainer, displayFragment).addToBackStack(TAG).commit();
 	}
 
 }
