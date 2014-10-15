@@ -208,8 +208,6 @@ public class MonsterCameraFragment extends Fragment {
 			int previewArea = width * height;
 			for(Size s : sizes){
 				Log.i(TAG, "Supported sizes - Width: " + s.width + " Height: " + s.height);
-			}
-			for(Size s : sizes){
 				int area = s.width * s.height;
 				if(area > previewArea){
 					bestSize = s;
