@@ -33,6 +33,14 @@
             android:text="@string/hint_one"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <Button
+            android:id="@+id/gamefrag_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Register" />
+
     </RelativeLayout>
 
     <ImageView
@@ -42,8 +50,7 @@
         android:layout_weight="0.68"
         android:scaleType="fitCenter"
         android:background="@android:color/darker_gray"
-        android:cropToPadding="true"
-        android:contentDescription="@string/desc" />
+        android:cropToPadding="true"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
