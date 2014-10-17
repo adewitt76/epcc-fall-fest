@@ -2,15 +2,14 @@ package edu.epcc.epccfallfestapp;
 
 
 import java.util.UUID;
+//this is to check is the push worked
 public class Game{
-	
+		
 	private UUID mId;
 
 	
 	private Hint mCurrentHint;
-	private Photo mCurrentPhoto;
-	private Photo mNewPhoto;
-	
+
 	public Game(){
 		mId = UUID.randomUUID();
 		
@@ -21,11 +20,6 @@ public class Game{
 		
 	}
 	
-	public void updatePhoto(Photo newPhoto){
-		// a loop through function for testing
-		mCurrentPhoto = newPhoto;
-		mNewPhoto = mCurrentPhoto;
-	}
 
 	public UUID getId() {
 		return mId;
@@ -38,13 +32,22 @@ public class Game{
 	public void setCurrentHint(Hint mCurrentHint) {
 		this.mCurrentHint = mCurrentHint;
 	}
-
-	public Photo getCurrentPhoto() {
-		return mCurrentPhoto;
-	}
-
-	public void setCurrentPhoto(Photo mCurrentPhoto) {
-		this.mCurrentPhoto = mCurrentPhoto;
-	}
 	
+	public void update(String BC_ID){
+		// TODO: this function is how the Game class will be notified
+		if(BC_ID == GameFragment.BC_VAMPIRE){
+			// an example of how to use this method
+			setCurrentHint(new Hint("You found the Vampire"));
+		}
+		
+		if(BC_ID == GameFragment.BC_GHOST){
+			// an example of how to use this method
+			setCurrentHint(new Hint("You found the Ghost"));
+		}
+		
+		if(BC_ID == GameFragment.BC_MUMMY){
+			// an example of how to use this method
+			setCurrentHint(new Hint("You found the Mummy"));
+		}
+	}
 }

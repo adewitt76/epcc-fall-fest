@@ -4,7 +4,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,15 +23,12 @@
 
     <uses-permission android:name="edu.epcc.epccfallfestapp.permission.C2D_MESSAGE" />
 
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.flash" />
-
     <application
         android:name="edu.epcc.epccfallfestapp.CustomApp"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/monster_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.Holoween" >
         <activity
             android:name=".Splash"
             android:label="@string/app_name" >
@@ -44,12 +41,6 @@
         
         <activity android:name="edu.epcc.epccfallfestapp.MainActivity"/>
         
-        <activity
-            android:name=".MonsterCameraActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape" >
-        </activity>
-
         <service android:name="com.parse.PushService" />
 
         <receiver
