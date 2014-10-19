@@ -31,82 +31,155 @@ public class GameFragment extends Fragment{
 	private static final String TAG = "MonsterFragment";
 	
 	// Bar code ID constants.
-	public static final String BC_VAMPIRE = "edu.epcc.fall-fest dracula";
-	public static final String BC_MUMMY = "edu.epcc.fall-fest Mummy";
-	public static final String BC_GHOST = "edu.epcc.fall-fest Ghost";
+	public static final String BC_ALIEN = "edu.epcc.fall-fest alien";
+	public static final String BC_BLOB = "edu.epcc.fall-fest blob";
+	public static final String BC_CHUTULU = "edu.epcc.fall-fest chutulu";
+	public static final String BC_CLOPS = "edu.epcc.fall-fest clops";
+	public static final String BC_FRANKIE = "edu.epcc.fall-fest frankie";
+	public static final String BC_MUMMY = "edu.epcc.fall-fest mummy";
+	public static final String BC_TOMATO = "edu.epcc.fall-fest tomato";
+	public static final String BC_VAMPIRE = "edu.epcc.fall-fest vampire";
+	public static final String BC_WEREWOLF = "edu.epcc.fall-fest werewolf";
+	public static final String BC_WITCH = "edu.epcc.fall-fest witch";
+	public static final String BC_YETI = "edu.epcc.fall-fest yeti";
+	
+	private ImageView mAlienView;
+	private ImageView mBlobView;
+	private ImageView mChutuluView;
+	private ImageView mClopsView;
+	private ImageView mFrankieView;
+	private ImageView mMummyView;
+	private ImageView mTomatoView;
+	private ImageView mVampireView;
+	private ImageView mWerewolfView;
+	private ImageView mWitchView;
+	private ImageView mYetiView;
 	
 	// initialization of views pertaining to this fragment
 	private final Game mGame = new Game();
-	private ImageView mMonsterImageView;
-	private Button mPhotoButton;
-	private TextView mHintText;
+	private Button mScanButton;
 	IntentIntegrator scanIntegrator;
-	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
 		
 		getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
-		View v = inflater.inflate(R.layout.fragment_game, parent, false);
+		View v = inflater.inflate(R.layout.fragment_main, parent, false);
 		
-		mMonsterImageView = (ImageView)v.findViewById(R.id.monster_ImageView);
+		mAlienView = (ImageView)v.findViewById(R.id.image_alien);
+		mBlobView = (ImageView)v.findViewById(R.id.image_blob);
+		mChutuluView = (ImageView)v.findViewById(R.id.image_chutlu);
+		mClopsView = (ImageView)v.findViewById(R.id.image_clops);
+		mFrankieView = (ImageView)v.findViewById(R.id.image_frankie);
+		mMummyView = (ImageView)v.findViewById(R.id.image_mummy);
+		mTomatoView = (ImageView)v.findViewById(R.id.image_tomato);
+		mVampireView = (ImageView)v.findViewById(R.id.image_vampire);
+		mWerewolfView = (ImageView)v.findViewById(R.id.image_werewolf);
+		mWitchView = (ImageView)v.findViewById(R.id.image_witch);
+		mYetiView = (ImageView)v.findViewById(R.id.image_yeti);
 		
 		scanIntegrator = new IntentIntegrator(this);
 		
-		mPhotoButton = (Button)v.findViewById(R.id.photoButton);
-		mPhotoButton.setOnClickListener(new View.OnClickListener() {
+		mScanButton = (Button)v.findViewById(R.id.photoButton);
+		mScanButton.setOnClickListener(new View.OnClickListener() {
 		
 			@Override
 			public void onClick(View v) {
-				if(v.getId()==R.id.photoButton){
-					scanIntegrator.initiateScan();
-				}
+				try{
+					if(v.getId()==R.id.photoButton){
+						scanIntegrator.initiateScan();
+					}
+				}catch(Exception e){}
 			}
 		});
 
-		mMonsterImageView.setImageDrawable(PictureUtils.getScaledDrawable(getActivity(), getResources(), R.drawable.monster_hunt_title));
-		
-		mHintText =(TextView)v.findViewById(R.id.hintText);
-		mHintText.setText(mGame.getCurrentHint().getHint());
-		
 		return v;
 	}
 	
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
+		
+		if(data == null) return;
+		
 		IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-		if(scanningResult == null) return;
 			
 		// Fragments and FragmentManager initialization
-		Fragment displayFragment = null;	
+		FoundMonsterFragment displayFragment = null;	
 		
 		String scanContent = scanningResult.getContents();
 		String scanFormat = scanningResult.getFormatName();
 		Log.i(TAG,"Barcode content: "+scanContent+"\nBarcode format: "+scanFormat+"\n");
-		int resourceID = 0;
 		
-		if(scanContent.equals(BC_VAMPIRE)){ 
-			resourceID = R.drawable.vampire;
-			displayFragment = new ExampleFragment();
-			mGame.update(BC_VAMPIRE);
-			}
-		else if(scanContent.equals(BC_MUMMY)){ 
-			resourceID = R.drawable.mummy;
+		if(scanContent.equals(BC_ALIEN)){
+			displayFragment = new FoundMonsterFragment(R.layout.alien_fragment);
+			mAlienView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_ALIEN);
+		}
+		
+		if(scanContent.equals(BC_BLOB)){
+			displayFragment = new FoundMonsterFragment(R.layout.blob_fragment);
+			mBlobView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_BLOB);
+		}
+		
+		if(scanContent.equals(BC_CHUTULU)){
+			displayFragment = new FoundMonsterFragment(R.layout.chutulu_fragment);
+			mChutuluView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_CHUTULU);
+		}
+		
+		if(scanContent.equals(BC_CLOPS)){
+			displayFragment = new FoundMonsterFragment(R.layout.clops_fragment);
+			mClopsView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_CLOPS);
+		}
+		
+		if(scanContent.equals(BC_FRANKIE)){
+			displayFragment = new FoundMonsterFragment(R.layout.frankie_fragment);
+			mFrankieView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_FRANKIE);
+		}
+		
+		if(scanContent.equals(BC_MUMMY)){
+			displayFragment = new FoundMonsterFragment(R.layout.mummy_fragment);
+			mMummyView.setVisibility(ImageView.VISIBLE);
 			mGame.update(BC_MUMMY);
 		}
-		else if(scanContent.equals(BC_GHOST)){
-			resourceID = R.drawable.ghosts;
-			mGame.update(BC_GHOST);
+		
+		if(scanContent.equals(BC_TOMATO)){
+			displayFragment = new FoundMonsterFragment(R.layout.tomato_fragment);
+			mTomatoView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_TOMATO);
 		}
-		else resourceID = R.drawable.monster_hunt_title;
+		
+		if(scanContent.equals(BC_VAMPIRE)){ 
+			displayFragment = new FoundMonsterFragment(R.layout.vampire_fragment);
+			mVampireView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_VAMPIRE);
+			}
+		
+		if(scanContent.equals(BC_WEREWOLF)){
+			displayFragment = new FoundMonsterFragment(R.layout.werewolf_fragment);
+			mWerewolfView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_WEREWOLF);
+		}
+		
+		if(scanContent.equals(BC_WITCH)){
+			displayFragment = new FoundMonsterFragment(R.layout.witch_fragment);
+			mWitchView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_WITCH);
+		}
+		
+		if(scanContent.equals(BC_YETI)){
+			displayFragment = new FoundMonsterFragment(R.layout.yeti_fragment);
+			mYetiView.setVisibility(ImageView.VISIBLE);
+			mGame.update(BC_YETI);
+		}
 		
 		// TODO: Update all display variables
-		mHintText.setText(mGame.getCurrentHint().getHint());
-		
-		mMonsterImageView.setImageDrawable(PictureUtils.getScaledDrawable(getActivity(), getResources(), resourceID));
-		
+				
 		if(displayFragment != null)
 			getFragmentManager().beginTransaction().replace(R.id.mainContainer, displayFragment).addToBackStack(TAG).commit();
 	}

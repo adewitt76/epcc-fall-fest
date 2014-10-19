@@ -17,17 +17,18 @@ import android.os.Bundle;
 
 public class MainActivity extends FragmentActivity {
 	
+	FragmentManager mFragmentManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fragment);
-		FragmentManager fm = getSupportFragmentManager();
-		Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
+		mFragmentManager = getSupportFragmentManager();
+		Fragment fragment = mFragmentManager.findFragmentById(R.id.fragmentContainer);
 		
 		if(fragment == null){
 			fragment = new GameFragment();
-			fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
+			mFragmentManager.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
 		}
 	}
 
