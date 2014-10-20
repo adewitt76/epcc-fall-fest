@@ -36,7 +36,7 @@ public class NotificationsReceiver extends BroadcastReceiver
 			{
 				String notificationText = json.getString(notification);
 				NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-				.setSmallIcon(R.drawable.ic_launcher)
+				.setSmallIcon(R.drawable.monster_icon)
 				.setContentTitle(notificationText);
 				NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService("notification");
 				mNotifyMgr.notify(mNotificationId, mBuilder.build());

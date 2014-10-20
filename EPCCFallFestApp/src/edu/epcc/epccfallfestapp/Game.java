@@ -2,6 +2,9 @@ package edu.epcc.epccfallfestapp;
 
 
 import java.util.UUID;
+
+import edu.epcc.epccfallfestapp.GameFragment;
+import edu.epcc.epccfallfestapp.Hint;
 //this is to check is the push worked
 public class Game{
 		
@@ -40,7 +43,7 @@ public class Game{
 			setCurrentHint(new Hint("You found the Vampire"));
 		}
 		
-		if(BC_ID == GameFragment.BC_GHOST){
+		if(BC_ID == GameFragment.BC_YETI){
 			// an example of how to use this method
 			setCurrentHint(new Hint("You found the Ghost"));
 		}
