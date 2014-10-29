@@ -10,5 +10,20 @@
     <string name="leader_3">Leader three spot</string>
     <string name="photo_button">Scan!!!</string>
     <string name="action_settings">Settings</string>
-
+	<string name="generic_description">generic description</string>
+	<string name="score">SCORE: </string>
+	<string name="score_init">0</string>
+	
+	<string name="found_alien">You found the Alien!!!</string>
+	<string name="found_blob">You found the Blob!!!</string>
+	<string name="found_chutulu">You found Cthulhu!!!</string>
+	<string name="found_clops">You found the Cyclops!!!</string>
+	<string name="found_frankie">You found Frankenstien!!!</string>
+	<string name="found_mummy">You found the Mummy!!!</string>
+	<string name="found_tomato">You found the Tomato!!!</string>
+	<string name="found_vampire">You found the Vampire!!!</string>
+	<string name="found_werewolf">You found the Werewolf!!!</string>
+	<string name="found_witch">You found the witch!!</string>
+	<string name="found_yeti">You found the Yeti!!!</string>
+	
 </resources>

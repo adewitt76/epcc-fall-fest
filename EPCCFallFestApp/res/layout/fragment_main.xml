@@ -11,27 +11,29 @@
             android:id="@+id/main_screen_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".9"
             android:scaleType="fitXY"
-            android:src="@drawable/graident_background" />
+            android:src="@drawable/graident_background"
+            android:contentDescription="@string/generic_description" />
 
        	<Button
        	    android:id="@+id/photoButton"
        	    android:layout_width="match_parent"
-       	    android:layout_height="35dp"
+       	    android:layout_height="wrap_content"
        	    android:layout_alignParentBottom="true"
        	    android:layout_alignParentLeft="true"
        	    android:layout_weight=".1"
        	    android:text="@string/photo_button" />
-
-       	<ImageView
+		
+       	"
+       	
+ 		<ImageView
        	    android:id="@+id/moon_png"
        	    android:layout_width="125dp"
        	    android:layout_height="125dp"
        	    android:scaleType="fitCenter"
+       	    android:layout_above="@+id/hill_2_png"
        	    android:layout_alignParentLeft="true"
-       	    android:layout_centerVertical="true"
-       	    android:contentDescription="moon on main fragment"
+       	    android:contentDescription="@string/generic_description"
        	    android:src="@drawable/moon" />
 
        	<ImageView
@@ -61,7 +63,7 @@
        	    android:contentDescription="logo on main fragment"
        	    android:scaleType="fitStart"
        	    android:src="@drawable/monster_logo" />
-
+		
        	<ImageView
        	    android:id="@+id/image_alien"
        	    android:layout_width="60dp"
@@ -72,7 +74,8 @@
        	    android:layout_marginLeft="30dp"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/alien"
-       	    android:visibility="invisible" />"
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />"
        	
        	<ImageView
        	    android:id="@+id/image_clops"
@@ -84,7 +87,8 @@
        	    android:layout_marginLeft="105dp"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/clops" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
        	
        	<ImageView
        	    android:id="@+id/image_vampire"
@@ -96,7 +100,8 @@
        	    android:layout_marginLeft="55dp"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/vampire" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
 
        	<ImageView
        	    android:id="@+id/image_werewolf"
@@ -108,7 +113,8 @@
        	    android:layout_marginRight="50dp"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/werewolf" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
    	
        	<ImageView
        	    android:id="@+id/image_witch"
@@ -120,7 +126,8 @@
        	    android:layout_marginRight="90dp"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/witch" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
        	
        	<ImageView
        	    android:id="@+id/image_mummy"
@@ -132,7 +139,8 @@
        	    android:layout_marginRight="140dp"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/mummy" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
        	       	
        	<ImageView
        	    android:id="@+id/image_yeti"
@@ -143,7 +151,8 @@
        	    android:layout_alignParentRight="true"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/yeti" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
        	       	
        	<ImageView
        	    android:id="@+id/image_frankie"
@@ -153,7 +162,8 @@
        	    android:layout_alignParentLeft="true"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/frankie" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
        	      	
       	<ImageView
        	    android:id="@+id/image_blob"
@@ -164,7 +174,8 @@
        	    android:layout_marginLeft="120dp"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/blob" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
       	
       	<ImageView
        	    android:id="@+id/image_tomato"
@@ -175,7 +186,8 @@
        	    android:layout_marginRight="45dp"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/tomato" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
      	
        	<ImageView
        	    android:id="@+id/image_chutlu"
@@ -186,6 +198,29 @@
        	    android:layout_marginRight="20dp"
        	    android:scaleType="centerCrop"
        	    android:src="@drawable/chutulu" 
-       	    android:visibility="invisible" />
+       	    android:visibility="invisible"
+       	    android:contentDescription="@string/generic_description" />
+
+       	<TextView
+       	    android:id="@+id/score_text"
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_alignBottom="@+id/moon_png"
+       	    android:layout_toRightOf="@+id/moon_png"
+       	    android:text="@string/score"
+       	    android:padding="2dp"
+       	    android:textSize="20sp"
+       	    android:textColor="@color/red" />
+       	
+       	<TextView
+       	    android:id="@+id/current_score"
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_alignBottom="@+id/moon_png"
+       	    android:layout_toRightOf="@+id/score_text"
+       	    android:text="@string/score_init"
+       	    android:padding="2dp"
+       	    android:textSize="20sp"
+       	    android:textColor="@color/red" />
 
 </RelativeLayout>
