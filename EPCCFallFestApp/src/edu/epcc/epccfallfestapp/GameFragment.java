@@ -1,4 +1,4 @@
-/*
+/**
  * EPCC Fall Festival Android app
  * This application is designed as a scavenger hunt game to 
  * be deployed and played at the EPCC Fall Festival.
@@ -9,32 +9,20 @@
 
 package edu.epcc.epccfallfestapp;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
-import android.hardware.Camera;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class GameFragment extends Fragment{
 
@@ -193,25 +181,3 @@ public class GameFragment extends Fragment{
 			getFragmentManager().beginTransaction().replace(R.id.mainContainer, displayFragment).addToBackStack(TAG).commit();
 	}
 }
-
-
-
-
-
-/*
-Button register = (Button)v.findViewById(R.id.gamefrag_register);
-		if(new File(getActivity().getFilesDir(), "register.txt").exists())
-			register.setVisibility(View.INVISIBLE);
-		else
-		{
-			register.setOnClickListener(new View.OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-					Fragment newFragment = new Register();
-					MainActivity.frame.removeAllViews();
-					MainActivity.fm.beginTransaction().add(R.id.fragmentContainer, newFragment).commit();
-				}
-			});
-*/

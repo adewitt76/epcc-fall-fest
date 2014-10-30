@@ -32,21 +32,20 @@ public class Register extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				if(user_name_txt.getText()!=null && user_password_txt.getText()!=null)
+				if(user_name_txt.getText().toString().length()>0 && user_password_txt.getText().toString().length()>0 )
 				{
 					ParseUser user = new ParseUser();
 					user.setUsername(user_name_txt.getText().toString());
 					user.setPassword(user_password_txt.getText().toString());
 					user.put("points", "0");
-					//user.setEmail("email@example.com");
 					//user.put("phone", "650-555-0000");
+					//user.setEmail("email@example.com");
 					user.signUpInBackground(new SignUpCallback()
 					{
 						public void done(ParseException e)
 						{
 							if (e == null)
 							{
-								// Hooray! Let them use the app now.
 								ParseUser.logInInBackground(user_name_txt.getText().toString(),user_password_txt.getText().toString(), new LogInCallback()
 								{
 									@Override
@@ -61,8 +60,10 @@ public class Register extends Fragment
 												if(!f.exists())
 													f.createNewFile();
 												PrintWriter out = new PrintWriter(f);
+												out.print(user.getObjectId());
 												out.print(user_name_txt.getText().toString());
 												out.print(user_password_txt.getText().toString());
+												out.print(""+0);
 												out.close();
 											}
 											catch (FileNotFoundException e1)
@@ -73,26 +74,34 @@ public class Register extends Fragment
 											{
 												e1.printStackTrace();
 											}
-											Toast.makeText(getActivity(), "You are registered and logged in.", Toast.LENGTH_SHORT).show();
-											Fragment newFragment = new GameFragment();
-											MainActivity.frame.removeAllViews();
-											MainActivity.fm.beginTransaction().add(R.id.fragmentContainer, newFragment).commit();
+											Toast.makeText(getActivity(), "You are registered.", Toast.LENGTH_SHORT).show();
+											Fragment newFragment = new Register();
+											MainActivity.leader_frame.removeAllViews();
+											MainActivity.fm.beginTransaction().add(R.id.leader_frame, newFragment).commit();
 										}
 										else
-											Toast.makeText(getActivity(), "Unable to login", Toast.LENGTH_SHORT).show();
+											Toast.makeText(getActivity(), "Unable to login.", Toast.LENGTH_SHORT).show();
 									}
 								});
 							}
 							else
-							{
 								Toast.makeText(getActivity(), "Unable to register.", Toast.LENGTH_SHORT).show();
-							}
 						}
 					});
+				}
+				else
+				{
+					//TODO erase
+					Fragment newFragment = new Leaderboards();
+					if(MainActivity.leader_frame==null)
+						Toast.makeText(getActivity(), "leader fram == null", Toast.LENGTH_SHORT).show();
+					else
+						MainActivity.leader_frame.removeAllViews();
+					MainActivity.fm.beginTransaction().add(R.id.leader_frame, newFragment).commit();
+					Toast.makeText(getActivity(), "Please enter information to register.", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
 		return v;
-
 	}
 }

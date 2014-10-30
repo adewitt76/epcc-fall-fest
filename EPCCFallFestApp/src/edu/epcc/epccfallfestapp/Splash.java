@@ -14,7 +14,7 @@ public class Splash extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 		final Context context = this;
-		new CountDownTimer(5000, 5001)
+		new CountDownTimer(1000, 5001)//TODO change time
 		{
 			@Override
 			public void onTick(long millisUntilFinished){}
