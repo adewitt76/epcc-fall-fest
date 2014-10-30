@@ -1,3 +1,12 @@
+/*
+ * EPCC Fall Festival Android app
+ * This application is designed as a scavenger hunt game to 
+ * be deployed and played at the EPCC Fall Festival.
+ * 
+ * File: GameFragment.java
+ * Author: Christian Murga
+ */
+
 package edu.epcc.epccfallfestapp;
 
 import java.io.File;

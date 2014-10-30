@@ -1,17 +1,25 @@
+/*
+ * EPCC Fall Festival Android app
+ * This application is designed as a scavenger hunt game to 
+ * be deployed and played at the EPCC Fall Festival.
+ * 
+ * File: GameFragment.java
+ * Author: Aaron DeWitt & Christian Murga
+ */
+
 package edu.epcc.epccfallfestapp;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class Splash extends Activity
 {
@@ -20,9 +28,19 @@ public class Splash extends Activity
 	private ImageView mCSITLogoView;
 	private ImageView mMonsterLogoView;
 	
+	private ImageView mSceneOne;
+	private ImageView mSceneTwo;
+	private ImageView mSceneThree;
+	private ImageView mSceneFour;
+	
 	private Animation animationFadeIn;
 	private Animation animationFadeOut;
-	private Animation translateAnimation;
+	
+	private MediaPlayer mSongPlayer;
+	private MediaPlayer mSirenPlayer;
+	
+	private CountDownTimer timer;
+	
 	final Context context = this;
 	
 	@Override
@@ -35,40 +53,123 @@ public class Splash extends Activity
 		mEPCCLogoView = (ImageView)findViewById(R.id.epcc_logo);
 		mCSITLogoView = (ImageView)findViewById(R.id.csit_logo);
 		mMonsterLogoView = (ImageView)findViewById(R.id.monster_logo);
+		
+		mSceneOne = (ImageView)findViewById(R.id.starting_scene_one);
+		mSceneTwo = (ImageView)findViewById(R.id.starting_scene_two);
+		mSceneThree = (ImageView)findViewById(R.id.starting_scene_three);
+		mSceneFour = (ImageView)findViewById(R.id.starting_scene_four);
+		
 		animationFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
 		animationFadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out);
 		
 		mEPCCLogoView.startAnimation(animationFadeIn);
 		mEPCCLogoView.setVisibility(ImageView.VISIBLE);
 		
-		new CountDownTimer(18000, 1000)
+		mSongPlayer = MediaPlayer.create(context, R.raw.app_song);
+		mSongPlayer.start();
+		
+		RelativeLayout mSplashLayout = (RelativeLayout)findViewById(R.id.splash_screen_rel_layout);
+		
+		mSplashLayout.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				timer.cancel();
+				if(mSongPlayer != null){
+					mSongPlayer.release();
+					mSongPlayer = null;
+				}
+				if(mSirenPlayer != null){
+					mSirenPlayer.release();
+					mSirenPlayer = null;
+				}
+				Intent i = new Intent(context, MainActivity.class);
+				startActivity(i);
+				finish();
+			}
+		});
+		
+		timer = new CountDownTimer(42000, 1000)
 		{
 			int counter = 1;
 			@Override
 			public void onTick(long milsLeft){
-				if(milsLeft <= 14000 && counter == 1){
+				if(milsLeft <= 38000 && counter == 1){
 					mEPCCLogoView.startAnimation(animationFadeOut);
 					mEPCCLogoView.setVisibility(View.GONE);
 					counter++;
 				}
-				if(milsLeft <= 12000 && counter == 2){
+				if(milsLeft <= 36000 && counter == 2){
 					mCSITLogoView.startAnimation(animationFadeIn);
 					mCSITLogoView.setVisibility(ImageView.VISIBLE);
 					counter++;
 				}
-				if(milsLeft <= 8000 && counter == 3){
+				if(milsLeft <= 32000 && counter == 3){
 					mCSITLogoView.startAnimation(animationFadeOut);
 					mCSITLogoView.setVisibility(View.GONE);
 					counter++;
 				}
-				if(milsLeft <= 6000 && counter == 4){
+				if(milsLeft <= 30000 && counter == 4){
 					mMonsterLogoView.startAnimation(animationFadeIn);
 					mMonsterLogoView.setVisibility(ImageView.VISIBLE);
 					counter++;
 				}
-				if(milsLeft <= 2000 && counter == 5){
+				if(milsLeft <= 26000 && counter == 5){
 					mMonsterLogoView.startAnimation(animationFadeOut);
 					mMonsterLogoView.setVisibility(ImageView.GONE);
+					counter++;
+				}
+				if(milsLeft <= 24000 && counter == 6){
+					mSceneOne.startAnimation(animationFadeIn);
+					mSceneOne.setVisibility(ImageView.VISIBLE);
+					counter++;
+				}
+				if(milsLeft <= 20000 && counter == 7){
+					mSirenPlayer = MediaPlayer.create(context, R.raw.police_siren);
+					mSirenPlayer.setVolume(.25f, 0.0f);
+					mSirenPlayer.start();
+					mSceneOne.startAnimation(animationFadeOut);
+					mSceneOne.setVisibility(View.GONE);
+					counter++;
+				}
+				if(milsLeft <= 18000 && counter == 8){
+					mSirenPlayer.setVolume(.5f, 0.25f);
+					mSongPlayer.release();
+					mSongPlayer = null;
+					mSceneTwo.startAnimation(animationFadeIn);
+					mSceneTwo.setVisibility(ImageView.VISIBLE);
+					counter++;
+				}
+				if(milsLeft <= 14000 && counter == 9){
+					mSirenPlayer.setVolume(1.0f, 1.0f);
+					mSceneTwo.startAnimation(animationFadeOut);
+					mSceneTwo.setVisibility(ImageView.GONE);
+					counter++;
+				}
+				if(milsLeft <= 12000 && counter == 10){
+					mSirenPlayer.setVolume(.25f, 0.5f);
+					mSceneThree.startAnimation(animationFadeIn);
+					mSceneThree.setVisibility(ImageView.VISIBLE);
+					counter++;
+				}
+				if(milsLeft <= 8000 && counter == 11){
+					mSirenPlayer.setVolume(.0f, 0.25f);
+					mSceneThree.startAnimation(animationFadeOut);
+					mSceneThree.setVisibility(View.GONE);
+					counter++;
+				}
+				if(milsLeft <= 6000 && counter == 12){
+					mSirenPlayer.release();
+					mSirenPlayer = null;
+					mSongPlayer = MediaPlayer.create(context, R.raw.crickets);
+					mSongPlayer.setVolume(.25f, .25f);
+					mSongPlayer.start();
+					mSceneFour.startAnimation(animationFadeIn);
+					mSceneFour.setVisibility(ImageView.VISIBLE);
+					counter++;
+				}
+				if(milsLeft <= 2000 && counter == 13){
+					mSceneFour.startAnimation(animationFadeOut);
+					mSceneFour.setVisibility(ImageView.GONE);
 					counter++;
 				}
 			}
@@ -76,12 +177,34 @@ public class Splash extends Activity
 			@Override
 			public void onFinish()
 			{
+				if(mSongPlayer != null){
+					mSongPlayer.release();
+					mSongPlayer = null;
+				}
+				if(mSirenPlayer != null){
+					mSirenPlayer.release();
+					mSirenPlayer = null;
+				}
 				Intent i = new Intent(context, MainActivity.class);
 				startActivity(i);
 				finish();
 			}
 		}.start();
-		
+	
 	}
 
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		timer.cancel();
+		timer = null;
+		if(mSongPlayer != null){
+			mSongPlayer.release();
+			mSongPlayer = null;
+		}
+		if(mSirenPlayer != null){
+			mSirenPlayer.release();
+			mSirenPlayer = null;
+		}
+	}
 }

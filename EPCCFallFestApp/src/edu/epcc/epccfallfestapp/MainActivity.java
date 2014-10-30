@@ -1,4 +1,3 @@
-
 /*
  * EPCC Fall Festival Android app
  * This application is designed as a scavenger hunt game to 

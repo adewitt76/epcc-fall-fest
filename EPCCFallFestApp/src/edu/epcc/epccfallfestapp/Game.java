@@ -1,11 +1,24 @@
+/*
+ * EPCC Fall Festival Android app
+ * This application is designed as a scavenger hunt game to 
+ * be deployed and played at the EPCC Fall Festival.
+ * 
+ * File: GameFragment.java
+ * Author: Aaron DeWitt
+ */
+
 package edu.epcc.epccfallfestapp;
 
+
+import java.io.Serializable;
 
 import edu.epcc.epccfallfestapp.GameFragment;
 
 //this is to check is the push worked
-public class Game{
+public class Game implements Serializable{
 		
+	private static final long serialVersionUID = 9203770842176328248L;
+	
 	private String loginName;
 	private long score;
 	private long startTime;
@@ -145,15 +158,27 @@ public class Game{
 		return score;
 	}
 	
-	public int getMonstersFound() {
+	public int monstersFound() {
 		return monstersFound;
 	}
 	
-	public boolean getGameEnded(){
+	public boolean gameEnded(){
 		return gameEnded;
 	}
 	
 	public void setGameEnded(boolean e){
 		gameEnded = e;
 	}
+	
+	public boolean foundAlien() { return foundAlien;}
+	public boolean foundBlob() { return foundBlob;}
+	public boolean foundChutulu() { return foundChutulu;} 
+	public boolean foundClops() { return foundClops;}
+	public boolean foundFrankie() { return foundFrankie;}
+	public boolean foundMummy() { return foundMummy;}
+	public boolean foundTomato() { return foundTomato;}
+	public boolean foundVampire() { return foundVampire;}
+	public boolean foundWerewolf() { return foundWerewolf;}
+	public boolean foundWitch() { return foundWitch;}
+	public boolean foundYeti() { return foundYeti;}
 }

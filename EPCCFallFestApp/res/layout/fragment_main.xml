@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+ * EPCC Fall Festival Android app
+ * This application is designed as a scavenger hunt game to 
+ * be deployed and played at the EPCC Fall Festival.
+ * 
+ * File: GameFragment.java
+ * Author: Aaron DeWitt
+ -->
+
+
 <RelativeLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainContainer"
@@ -21,10 +32,8 @@
        	    android:layout_height="wrap_content"
        	    android:layout_alignParentBottom="true"
        	    android:layout_alignParentLeft="true"
-       	    android:layout_weight=".1"
        	    android:text="@string/photo_button" />
 		
-       	"
        	
  		<ImageView
        	    android:id="@+id/moon_png"
