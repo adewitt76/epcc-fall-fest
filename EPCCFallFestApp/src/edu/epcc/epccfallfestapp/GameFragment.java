@@ -10,24 +10,18 @@
 package edu.epcc.epccfallfestapp;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
-import android.hardware.Camera;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +29,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class GameFragment extends Fragment{
 
@@ -66,11 +63,45 @@ public class GameFragment extends Fragment{
 	private ImageView mYetiView;
 
 	// initialization of views pertaining to this fragment
-	private final Game mGame = new Game();
+	private Game mGame;
+	private boolean newGame;
 	private Button mScanButton;
 	private TextView mCurrentScore;
 	IntentIntegrator scanIntegrator;
 	
+	@Override
+	public void onCreate(Bundle state){
+		super.onCreate(state);
+		File file = new File(getActivity().getFilesDir(), "game.ser");
+		
+		try {
+			if(file.isFile()){
+				Log.i(TAG,"File exists");
+				ObjectInputStream os = new ObjectInputStream(new FileInputStream(file));
+				mGame = (Game)os.readObject();
+				Log.i(TAG,"Score = "+mGame.getScore());
+				Log.i(TAG,"Vampire = "+mGame.foundVampire());
+				os.close();
+				newGame = false;
+			}else{
+				Log.i(TAG,"File does not exists");
+				mGame = new Game();
+				newGame = true;
+			}
+		} catch (StreamCorruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, final Bundle savedInstanceState){
@@ -92,7 +123,7 @@ public class GameFragment extends Fragment{
 		mYetiView = (ImageView)v.findViewById(R.id.image_yeti);
 		
 		scanIntegrator = new IntentIntegrator(this);
-		
+
 		mCurrentScore = (TextView)v.findViewById(R.id.current_score);
 		
 		mScanButton = (Button)v.findViewById(R.id.photoButton);
@@ -108,13 +139,48 @@ public class GameFragment extends Fragment{
 			}
 		});
 
+		if(!newGame) {
+			if(mGame.foundAlien()) mAlienView.setVisibility(ImageView.VISIBLE); 
+			if(mGame.foundBlob()) mBlobView.setVisibility(ImageView.VISIBLE);
+			if(mGame.foundChutulu()) mChutuluView.setVisibility(ImageView.VISIBLE);
+			if(mGame.foundClops()) mClopsView.setVisibility(ImageView.VISIBLE);
+			if(mGame.foundFrankie()) mFrankieView.setVisibility(ImageView.VISIBLE);
+			if(mGame.foundMummy()) mMummyView.setVisibility(ImageView.VISIBLE);
+			if(mGame.foundTomato()) mTomatoView.setVisibility(ImageView.VISIBLE); 
+			if(mGame.foundVampire()) mVampireView.setVisibility(ImageView.VISIBLE); 
+			if(mGame.foundWerewolf()) mWerewolfView.setVisibility(ImageView.VISIBLE); 
+			if(mGame.foundWitch()) mWitchView.setVisibility(ImageView.VISIBLE);
+			if(mGame.foundYeti()) mYetiView.setVisibility(ImageView.VISIBLE);
+			mCurrentScore.setText(""+mGame.getScore());
+			
+		}
+		
 		return v;
 	}
-
+	
 	@Override
-	public void onResume(){
+	public void onStart(){
 		super.onResume();
-
+		if(mGame.gameEnded()){ 
+			mScanButton.setEnabled(false);
+			getFragmentManager().beginTransaction().replace(R.id.mainContainer, new EndGameFragment()).commit();
+		}
+	}
+	
+	@Override
+	public void onStop(){
+		super.onPause();
+		File file = new File(getActivity().getFilesDir(), "game.ser");
+		file.delete();
+		try {
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
+			os.writeObject(mGame);
+			Log.i(TAG,"Writing File "+file.toString());
+			os.close();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -210,8 +276,8 @@ public class GameFragment extends Fragment{
 		
 		mCurrentScore.setText(""+mGame.getScore());
 		
-		Log.i(TAG,"Monsters Found: "+mGame.getMonstersFound());
-		if(mGame.getMonstersFound() == 11){
+		Log.i(TAG,"Monsters Found: "+mGame.monstersFound());
+		if(mGame.monstersFound() == 11){
 			mScanButton.setEnabled(false);
 			mGame.setGameEnded(true);
 			Log.i(TAG,"End Game Loader");
@@ -223,7 +289,6 @@ public class GameFragment extends Fragment{
 		
 	}
 	
-
 }
 
 

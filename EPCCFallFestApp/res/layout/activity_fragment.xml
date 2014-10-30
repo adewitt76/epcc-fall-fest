@@ -1,3 +1,12 @@
+<!-- 
+ * EPCC Fall Festival Android app
+ * This application is designed as a scavenger hunt game to 
+ * be deployed and played at the EPCC Fall Festival.
+ * 
+ * File: GameFragment.java
+ * Author: Aaron DeWitt
+ -->
+
 <FrameLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragmentContainer"
