@@ -167,6 +167,7 @@ public class GameFragment extends Fragment{
 		}
 	}
 	
+
 	@Override
 	public void onStop(){
 		super.onPause();

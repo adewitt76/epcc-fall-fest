@@ -14,15 +14,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.CountDownTimer;
+import alt.android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+
+
 public class Splash extends Activity
 {
+	private static final String TAG = "SplashActivity";
 	
 	private ImageView mEPCCLogoView;
 	private ImageView mCSITLogoView;
@@ -39,8 +44,9 @@ public class Splash extends Activity
 	private MediaPlayer mSongPlayer;
 	private MediaPlayer mSirenPlayer;
 	
-	private CountDownTimer timer;
-	
+	private static CountDownTimer timer;
+	private int timeLeft;
+	private int timerCounter;
 	final Context context = this;
 	
 	@Override
@@ -49,6 +55,8 @@ public class Splash extends Activity
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);	
+		
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		mEPCCLogoView = (ImageView)findViewById(R.id.epcc_logo);
 		mCSITLogoView = (ImageView)findViewById(R.id.csit_logo);
@@ -67,6 +75,9 @@ public class Splash extends Activity
 		
 		mSongPlayer = MediaPlayer.create(context, R.raw.app_song);
 		mSongPlayer.start();
+		
+		timeLeft = 42000;
+		timerCounter = 1;
 		
 		RelativeLayout mSplashLayout = (RelativeLayout)findViewById(R.id.splash_screen_rel_layout);
 		
@@ -88,76 +99,140 @@ public class Splash extends Activity
 			}
 		});
 		
-		timer = new CountDownTimer(42000, 1000)
+		timer = createTimer();
+		timer.start();
+	
+	}
+
+	@Override
+	public void onPause(){
+		super.onPause();
+		if(timer != null){
+			timer.cancel();
+			timer = null;
+		}
+		if(mSongPlayer != null){
+			mSongPlayer.pause();
+		}
+		if(mSirenPlayer != null){
+			mSirenPlayer.pause();
+		}
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		timer = createTimer();
+		timer.start();
+		if(mSongPlayer != null){
+			mSongPlayer.start();
+		}
+		if(mSirenPlayer != null){
+			mSirenPlayer.start();
+		}
+	}
+	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		if(timer != null){
+			timer.onFinish();
+			timer = null;
+		}
+		if(mSongPlayer != null){
+			mSongPlayer.release();
+			mSongPlayer = null;
+		}
+		if(mSirenPlayer != null){
+			mSirenPlayer.release();
+			mSirenPlayer = null;
+		}
+		finish();
+	}
+	
+	private CountDownTimer createTimer(){
+		return new CountDownTimer(timeLeft, 1000)
 		{
-			int counter = 1;
+			
 			@Override
 			public void onTick(long milsLeft){
-				if(milsLeft <= 38000 && counter == 1){
+				if(milsLeft <= 38000 && timerCounter == 1){
+					timeLeft = 38000;
 					mEPCCLogoView.startAnimation(animationFadeOut);
 					mEPCCLogoView.setVisibility(View.GONE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 36000 && counter == 2){
+				if(milsLeft <= 36000 && timerCounter == 2){
+					timeLeft = 36000;
 					mCSITLogoView.startAnimation(animationFadeIn);
 					mCSITLogoView.setVisibility(ImageView.VISIBLE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 32000 && counter == 3){
+				if(milsLeft <= 32000 && timerCounter == 3){
+					timeLeft = 32000;
 					mCSITLogoView.startAnimation(animationFadeOut);
 					mCSITLogoView.setVisibility(View.GONE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 30000 && counter == 4){
+				if(milsLeft <= 30000 && timerCounter == 4){
+					timeLeft = 30000;
 					mMonsterLogoView.startAnimation(animationFadeIn);
 					mMonsterLogoView.setVisibility(ImageView.VISIBLE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 26000 && counter == 5){
+				if(milsLeft <= 26000 && timerCounter == 5){
+					timeLeft = 26000;
 					mMonsterLogoView.startAnimation(animationFadeOut);
 					mMonsterLogoView.setVisibility(ImageView.GONE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 24000 && counter == 6){
+				if(milsLeft <= 24000 && timerCounter == 6){
+					timeLeft =24000;
 					mSceneOne.startAnimation(animationFadeIn);
 					mSceneOne.setVisibility(ImageView.VISIBLE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 20000 && counter == 7){
+				if(milsLeft <= 20000 && timerCounter == 7){
+					timeLeft = 20000;
 					mSirenPlayer = MediaPlayer.create(context, R.raw.police_siren);
 					mSirenPlayer.setVolume(.25f, 0.0f);
 					mSirenPlayer.start();
 					mSceneOne.startAnimation(animationFadeOut);
 					mSceneOne.setVisibility(View.GONE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 18000 && counter == 8){
+				if(milsLeft <= 18000 && timerCounter == 8){
+					timeLeft = 18000;
 					mSirenPlayer.setVolume(.5f, 0.25f);
 					mSongPlayer.release();
 					mSongPlayer = null;
 					mSceneTwo.startAnimation(animationFadeIn);
 					mSceneTwo.setVisibility(ImageView.VISIBLE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 14000 && counter == 9){
+				if(milsLeft <= 14000 && timerCounter == 9){
+					timeLeft = 14000;
 					mSirenPlayer.setVolume(1.0f, 1.0f);
 					mSceneTwo.startAnimation(animationFadeOut);
 					mSceneTwo.setVisibility(ImageView.GONE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 12000 && counter == 10){
+				if(milsLeft <= 12000 && timerCounter == 10){
+					timeLeft = 12000;
 					mSirenPlayer.setVolume(.25f, 0.5f);
 					mSceneThree.startAnimation(animationFadeIn);
 					mSceneThree.setVisibility(ImageView.VISIBLE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 8000 && counter == 11){
+				if(milsLeft <= 8000 && timerCounter == 11){
+					timeLeft = 8000;
 					mSirenPlayer.setVolume(.0f, 0.25f);
 					mSceneThree.startAnimation(animationFadeOut);
 					mSceneThree.setVisibility(View.GONE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 6000 && counter == 12){
+				if(milsLeft <= 6000 && timerCounter == 12){
+					timeLeft = 6000;
 					mSirenPlayer.release();
 					mSirenPlayer = null;
 					mSongPlayer = MediaPlayer.create(context, R.raw.crickets);
@@ -165,12 +240,13 @@ public class Splash extends Activity
 					mSongPlayer.start();
 					mSceneFour.startAnimation(animationFadeIn);
 					mSceneFour.setVisibility(ImageView.VISIBLE);
-					counter++;
+					timerCounter++;
 				}
-				if(milsLeft <= 2000 && counter == 13){
+				if(milsLeft <= 2000 && timerCounter == 13){
+					timeLeft = 2000;
 					mSceneFour.startAnimation(animationFadeOut);
 					mSceneFour.setVisibility(ImageView.GONE);
-					counter++;
+					timerCounter++;
 				}
 			}
 
@@ -189,22 +265,6 @@ public class Splash extends Activity
 				startActivity(i);
 				finish();
 			}
-		}.start();
-	
-	}
-
-	@Override
-	public void onDestroy(){
-		super.onDestroy();
-		timer.cancel();
-		timer = null;
-		if(mSongPlayer != null){
-			mSongPlayer.release();
-			mSongPlayer = null;
-		}
-		if(mSirenPlayer != null){
-			mSirenPlayer.release();
-			mSirenPlayer = null;
-		}
+		};
 	}
 }
