@@ -47,6 +47,8 @@ public class Splash extends Activity
 	private static CountDownTimer timer;
 	private int timeLeft;
 	private int timerCounter;
+	private boolean running = true;
+	
 	final Context context = this;
 	
 	@Override
@@ -107,6 +109,7 @@ public class Splash extends Activity
 	@Override
 	public void onPause(){
 		super.onPause();
+		running = false;
 		if(timer != null){
 			timer.cancel();
 			timer = null;
@@ -135,8 +138,9 @@ public class Splash extends Activity
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
+		running = false;
 		if(timer != null){
-			timer.onFinish();
+			timer.cancel();
 			timer = null;
 		}
 		if(mSongPlayer != null){
@@ -156,6 +160,7 @@ public class Splash extends Activity
 			
 			@Override
 			public void onTick(long milsLeft){
+				if(running){
 				if(milsLeft <= 38000 && timerCounter == 1){
 					timeLeft = 38000;
 					mEPCCLogoView.startAnimation(animationFadeOut);
@@ -248,11 +253,13 @@ public class Splash extends Activity
 					mSceneFour.setVisibility(ImageView.GONE);
 					timerCounter++;
 				}
+				}
 			}
 
 			@Override
 			public void onFinish()
 			{
+				if(running){
 				if(mSongPlayer != null){
 					mSongPlayer.release();
 					mSongPlayer = null;
@@ -263,6 +270,7 @@ public class Splash extends Activity
 				}
 				Intent i = new Intent(context, MainActivity.class);
 				startActivity(i);
+				}
 				finish();
 			}
 		};
