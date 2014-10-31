@@ -132,9 +132,9 @@ public class Game implements Serializable{
 	{
 		long time = System.currentTimeMillis();
 		int scoreIndex = ((int)(time-startTime)/1000);
-		if(scoreIndex > 9750) score = 250;
+		if(scoreIndex > 9750)  score += 250;
 		//you got 83 minutes to find all the monsters to get a score
-		score += (10000-scoreIndex)*bonusMultiplier;
+		else score += (10000-scoreIndex)*bonusMultiplier;
 		
 	}
 	
