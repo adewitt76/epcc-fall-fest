@@ -43,7 +43,7 @@ public class MainActivity extends FragmentActivity{
 				fm.beginTransaction().add(R.id.leader_frame, drawer).commit();
 			}
 		}
-		else//TODO deal with register
+		else//deal with register
 		{
 			Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 			if(fragment == null)
