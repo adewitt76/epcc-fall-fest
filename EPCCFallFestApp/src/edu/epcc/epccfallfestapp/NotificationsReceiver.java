@@ -1,5 +1,9 @@
 package edu.epcc.epccfallfestapp;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import org.json.JSONException;
@@ -65,6 +69,29 @@ public class NotificationsReceiver extends BroadcastReceiver
 				input.close();
 			}
 			catch (JSONException ee)//if leaderboard was not found
+			{}
+			try
+			{
+				String notificationText = json.getString("ticket");
+				File f = new File(context.getFilesDir(), "ticket.txt");
+				try
+				{
+					if(!f.exists())
+						f.createNewFile();
+					PrintWriter out = new PrintWriter(f);
+					out.print("gooby plz");
+					out.close();
+				}
+				catch (FileNotFoundException e1)
+				{
+					e1.printStackTrace();
+				}
+				catch (IOException e1)
+				{
+					e1.printStackTrace();
+				}
+			}
+			catch (JSONException ee)//if ticket was not found
 			{}
 		}
 		catch (JSONException e){}//if json object was bad

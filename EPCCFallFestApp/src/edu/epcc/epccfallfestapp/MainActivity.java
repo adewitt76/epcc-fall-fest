@@ -28,7 +28,7 @@ public class MainActivity extends FragmentActivity{
 		setContentView(R.layout.activity_fragment);
 		fm = getSupportFragmentManager();
 		frame = (FrameLayout)findViewById(R.id.fragmentContainer);
-		if(new File(getFilesDir(), "register.txt").exists())
+		if(new File(getFilesDir(), "register.txt").exists() && new File(getFilesDir(), "ticket.txt").exists())
 		{
 			Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 			if(fragment == null){

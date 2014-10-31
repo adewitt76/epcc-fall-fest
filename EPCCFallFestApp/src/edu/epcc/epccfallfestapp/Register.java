@@ -84,7 +84,7 @@ public class Register extends Fragment
 												e1.printStackTrace();
 											}
 											Toast.makeText(getActivity(), "You are registered.", Toast.LENGTH_SHORT).show();
-											Fragment newFragment = new Register();
+											Fragment newFragment = new GameFragment();
 											MainActivity.frame.removeAllViews();
 											MainActivity.fm.beginTransaction().add(R.id.fragmentContainer, newFragment).commit();
 										}
@@ -100,7 +100,6 @@ public class Register extends Fragment
 				}
 //				else //TESTING PURPOSES
 //				{
-//					//TODO erase
 //					Fragment newFragment = new Leaderboards();
 //					if(MainActivity.leader_frame==null)
 //						Toast.makeText(getActivity(), "leader fram == null", Toast.LENGTH_SHORT).show();
