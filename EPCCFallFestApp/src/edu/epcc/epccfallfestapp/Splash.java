@@ -125,6 +125,7 @@ public class Splash extends Activity
 	@Override
 	public void onResume(){
 		super.onResume();
+		running = true;
 		timer = createTimer();
 		timer.start();
 		if(mSongPlayer != null){
