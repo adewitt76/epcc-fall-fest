@@ -1,11 +1,10 @@
-
 /*
  * EPCC Fall Festival Android app
  * This application is designed as a scavenger hunt game to 
  * be deployed and played at the EPCC Fall Festival.
  * 
  * File: MainActivity.java
- * Author: Aaron DeWitt
+ * Author: Aaron DeWitt & Christian Murga
  */
 
 package edu.epcc.epccfallfestapp;
@@ -24,22 +23,35 @@ public class MainActivity extends FragmentActivity{
 	public static FrameLayout frame, leader_frame;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fragment);
-		frame = (FrameLayout)findViewById(R.id.fragmentContainer);
-		leader_frame = (FrameLayout)findViewById(R.id.leader_frame);
 		fm = getSupportFragmentManager();
-		Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
-		if(fragment == null){
-			fragment = (new File(getFilesDir(), "register.txt").exists()) ?new GameFragment() : new Register();
-			fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
-		}
-		Fragment drawer = fm.findFragmentById(R.id.leader_frame);
-		if(drawer==null)
+		frame = (FrameLayout)findViewById(R.id.fragmentContainer);
+		if(new File(getFilesDir(), "register.txt").exists())
 		{
-			drawer = new Leaderboards();
-			fm.beginTransaction().add(R.id.leader_frame, drawer).commit();
+			Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
+			if(fragment == null){
+				fragment = new GameFragment();
+				fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
+			}
+			leader_frame = (FrameLayout)findViewById(R.id.leader_frame);
+			Fragment drawer = fm.findFragmentById(R.id.leader_frame);
+			if(drawer==null)
+			{
+				drawer = new Leaderboards();
+				fm.beginTransaction().add(R.id.leader_frame, drawer).commit();
+			}
 		}
+		else//TODO deal with register
+		{
+			Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
+			if(fragment == null)
+			{
+				fragment = new Register();
+				fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
+			}
+		}
+		
 	}
 }

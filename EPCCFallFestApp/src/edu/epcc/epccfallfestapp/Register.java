@@ -1,3 +1,12 @@
+/*
+ * EPCC Fall Festival Android app
+ * This application is designed as a scavenger hunt game to 
+ * be deployed and played at the EPCC Fall Festival.
+ * 
+ * File: GameFragment.java
+ * Author: Christian Murga
+ */
+
 package edu.epcc.epccfallfestapp;
 
 import java.io.File;
@@ -76,8 +85,8 @@ public class Register extends Fragment
 											}
 											Toast.makeText(getActivity(), "You are registered.", Toast.LENGTH_SHORT).show();
 											Fragment newFragment = new Register();
-											MainActivity.leader_frame.removeAllViews();
-											MainActivity.fm.beginTransaction().add(R.id.leader_frame, newFragment).commit();
+											MainActivity.frame.removeAllViews();
+											MainActivity.fm.beginTransaction().add(R.id.fragmentContainer, newFragment).commit();
 										}
 										else
 											Toast.makeText(getActivity(), "Unable to login.", Toast.LENGTH_SHORT).show();
@@ -89,17 +98,17 @@ public class Register extends Fragment
 						}
 					});
 				}
-				else
-				{
-					//TODO erase
-					Fragment newFragment = new Leaderboards();
-					if(MainActivity.leader_frame==null)
-						Toast.makeText(getActivity(), "leader fram == null", Toast.LENGTH_SHORT).show();
-					else
-						MainActivity.leader_frame.removeAllViews();
-					MainActivity.fm.beginTransaction().add(R.id.leader_frame, newFragment).commit();
-					Toast.makeText(getActivity(), "Please enter information to register.", Toast.LENGTH_SHORT).show();
-				}
+//				else //TESTING PURPOSES
+//				{
+//					//TODO erase
+//					Fragment newFragment = new Leaderboards();
+//					if(MainActivity.leader_frame==null)
+//						Toast.makeText(getActivity(), "leader fram == null", Toast.LENGTH_SHORT).show();
+//					else
+//						MainActivity.leader_frame.removeAllViews();
+//					MainActivity.fm.beginTransaction().add(R.id.leader_frame, newFragment).commit();
+//					Toast.makeText(getActivity(), "Please enter information to register.", Toast.LENGTH_SHORT).show();
+//				}
 			}
 		});
 		return v;
