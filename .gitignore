@@ -1,8 +1,15 @@
 # Can ignore specific files
 .gradle
 .idea
+.settings
+bin
 build
+gen
 local.properties
+.classpath
+.project
+epcc-fall-fest.iml
+
 
 # Use wildcards as well
 # *~
