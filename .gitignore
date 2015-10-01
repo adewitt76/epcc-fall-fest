@@ -1,0 +1,12 @@
+# Can ignore specific files
+.gradle
+.idea
+build
+local.properties
+
+# Use wildcards as well
+# *~
+# *.swp
+
+# Can also ignore all directories and files in a directory.
+# tmp/**/* 
