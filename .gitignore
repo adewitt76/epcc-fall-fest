@@ -5,11 +5,13 @@
 bin
 build
 gen
+gradle
 local.properties
 .classpath
 .project
 epcc-fall-fest.iml
-
+gradlew
+gradlew.bat
 
 # Use wildcards as well
 # *~
