@@ -1,0 +1,82 @@
+<!-- 
+ * EPCC Fall Festival Android app
+ * This application is designed as a scavenger hunt game to 
+ * be deployed and played at the EPCC Fall Festival.
+ * 
+ * File: GameFragment.java
+ * Author: Christian Murga & Aaron DeWitt
+ -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.epcc.epccfallfestapp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="12"
+        android:targetSdkVersion="20" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <permission
+        android:name="edu.epcc.epccfallfestapp.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="edu.epcc.epccfallfestapp.permission.C2D_MESSAGE" />
+
+    <application
+        android:name="edu.epcc.epccfallfestapp.CustomApp"
+        android:allowBackup="true"
+        android:icon="@drawable/monster_icon"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Holoween" >
+        <activity
+            android:name=".Splash"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name="edu.epcc.epccfallfestapp.MainActivity"
+            android:screenOrientation="portrait" />
+        
+        <service android:name="com.parse.PushService" />
+
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="edu.epcc.epccfallfestapp" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="edu.epcc.epccfallfestapp.NotificationsReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+                <action android:name="edu.epcc.epccfallfestapp.UPDATE_STATUS" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
