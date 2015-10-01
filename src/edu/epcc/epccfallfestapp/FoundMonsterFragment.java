@@ -18,21 +18,16 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 public class FoundMonsterFragment extends Fragment {
-	
-	int resource;
+
 	MediaPlayer mPlayer;
-	
-	
-	FoundMonsterFragment(int resource){
-		super();
-		this.resource = resource;
-	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-		
-		View v = inflater.inflate(resource, parent, false);
-				
+
+        int monster_resource = getArguments().getInt("monster_found");
+
+		View v = inflater.inflate(monster_resource, parent, false);
+
 		RelativeLayout mMonsterLayout = (RelativeLayout)v.findViewById(R.id.found_monster_layout);
 		
 		mMonsterLayout.setOnClickListener(new View.OnClickListener() {	

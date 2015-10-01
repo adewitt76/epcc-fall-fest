@@ -197,84 +197,117 @@ public class GameFragment extends Fragment{
 		String scanContent = scanningResult.getContents();
 		String scanFormat = scanningResult.getFormatName();
 		Log.i(TAG,"Barcode content: "+scanContent+"\nBarcode format: "+scanFormat+"\n");
-		
-		if(scanContent.equals(BC_ALIEN)){
-			if(mGame.update(BC_ALIEN)){
-				displayFragment = new FoundMonsterFragment(R.layout.alien_fragment);
-				mAlienView.setVisibility(ImageView.VISIBLE);
+		if(scanContent != null) {
+			if (scanContent.equals(BC_ALIEN)) {
+				if (mGame.update(BC_ALIEN)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.alien_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mAlienView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_BLOB)) {
+				if (mGame.update(BC_BLOB)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.blob_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mBlobView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_CHUTULU)) {
+				if (mGame.update(BC_CHUTULU)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.chutulu_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mChutuluView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_CLOPS)) {
+				if (mGame.update(BC_CLOPS)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.clops_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mClopsView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_FRANKIE)) {
+				if (mGame.update(BC_FRANKIE)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.frankie_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mFrankieView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_MUMMY)) {
+				if (mGame.update(BC_MUMMY)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.mummy_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mMummyView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_TOMATO)) {
+				if (mGame.update(BC_TOMATO)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.tomato_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mTomatoView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_VAMPIRE)) {
+				if (mGame.update(BC_VAMPIRE)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.vampire_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mVampireView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_WEREWOLF)) {
+				if (mGame.update(BC_WEREWOLF)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.werewolf_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mWerewolfView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_WITCH)) {
+				if (mGame.update(BC_WITCH)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.witch_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mWitchView.setVisibility(ImageView.VISIBLE);
+				}
+			}
+
+			if (scanContent.equals(BC_YETI)) {
+				if (mGame.update(BC_YETI)) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("monster_found", R.layout.yeti_fragment);
+					displayFragment = new FoundMonsterFragment();
+					displayFragment.setArguments(bundle);
+					mYetiView.setVisibility(ImageView.VISIBLE);
+				}
 			}
 		}
-		
-		if(scanContent.equals(BC_BLOB)){
-			if(mGame.update(BC_BLOB)){
-				displayFragment = new FoundMonsterFragment(R.layout.blob_fragment);
-				mBlobView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-		
-		if(scanContent.equals(BC_CHUTULU)){
-			if(mGame.update(BC_CHUTULU)){
-				displayFragment = new FoundMonsterFragment(R.layout.chutulu_fragment);
-				mChutuluView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-		
-		if(scanContent.equals(BC_CLOPS)){
-			if(mGame.update(BC_CLOPS)){
-				displayFragment = new FoundMonsterFragment(R.layout.clops_fragment);
-				mClopsView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-		
-		if(scanContent.equals(BC_FRANKIE)){
-			if(mGame.update(BC_FRANKIE)){
-				displayFragment = new FoundMonsterFragment(R.layout.frankie_fragment);
-				mFrankieView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-		
-		if(scanContent.equals(BC_MUMMY)){
-			if(mGame.update(BC_MUMMY)){
-				displayFragment = new FoundMonsterFragment(R.layout.mummy_fragment);
-				mMummyView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-		
-		if(scanContent.equals(BC_TOMATO)){
-			if(mGame.update(BC_TOMATO)){
-				displayFragment = new FoundMonsterFragment(R.layout.tomato_fragment);
-				mTomatoView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-		
-		if(scanContent.equals(BC_VAMPIRE)){
-			if(mGame.update(BC_VAMPIRE)){
-				displayFragment = new FoundMonsterFragment(R.layout.vampire_fragment);
-				mVampireView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-	
-		if(scanContent.equals(BC_WEREWOLF)){
-			if(mGame.update(BC_WEREWOLF)){
-				displayFragment = new FoundMonsterFragment(R.layout.werewolf_fragment);
-				mWerewolfView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-		
-		if(scanContent.equals(BC_WITCH)){
-			if(mGame.update(BC_WITCH)){
-				displayFragment = new FoundMonsterFragment(R.layout.witch_fragment);
-				mWitchView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-		
-		if(scanContent.equals(BC_YETI)){
-			if(mGame.update(BC_YETI)){
-				displayFragment = new FoundMonsterFragment(R.layout.yeti_fragment);
-				mYetiView.setVisibility(ImageView.VISIBLE);
-			}
-		}
-		
 		mCurrentScore.setText(""+mGame.getScore());
 		
 		Log.i(TAG,"Monsters Found: "+mGame.monstersFound());
