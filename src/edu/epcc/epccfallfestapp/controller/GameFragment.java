@@ -1,5 +1,5 @@
 
-package edu.epcc.epccfallfestapp.Controllers;
+package edu.epcc.epccfallfestapp.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import edu.epcc.epccfallfestapp.Model.Game;
+import edu.epcc.epccfallfestapp.model.Game;
 import edu.epcc.epccfallfestapp.R;
 
 /**

@@ -7,7 +7,7 @@
  * Author: Aaron DeWitt
  */
 
-package edu.epcc.epccfallfestapp.Controllers;
+package edu.epcc.epccfallfestapp.controller;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;

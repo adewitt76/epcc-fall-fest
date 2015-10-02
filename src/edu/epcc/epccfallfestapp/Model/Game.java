@@ -7,14 +7,14 @@
  * Author: Aaron DeWitt
  */
 
-package edu.epcc.epccfallfestapp.Model;
+package edu.epcc.epccfallfestapp.model;
 
 
 import android.view.View;
 
 import java.io.Serializable;
 
-import edu.epcc.epccfallfestapp.Controllers.FoundMonsterFragment;
+import edu.epcc.epccfallfestapp.controller.FoundMonsterFragment;
 
 public class Game implements Serializable{
 		

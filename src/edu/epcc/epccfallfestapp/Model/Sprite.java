@@ -1,4 +1,4 @@
-package edu.epcc.epccfallfestapp.Model;
+package edu.epcc.epccfallfestapp.model;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import java.io.Serializable;
 
-import edu.epcc.epccfallfestapp.Controllers.FoundMonsterFragment;
+import edu.epcc.epccfallfestapp.controller.FoundMonsterFragment;
 
 /**
  * Sprites are the data sets for the characters in the game. As Character is a wrapper class

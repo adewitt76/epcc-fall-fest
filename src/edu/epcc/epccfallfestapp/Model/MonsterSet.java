@@ -1,4 +1,4 @@
-package edu.epcc.epccfallfestapp.Model;
+package edu.epcc.epccfallfestapp.model;
 
 import edu.epcc.epccfallfestapp.R;
 

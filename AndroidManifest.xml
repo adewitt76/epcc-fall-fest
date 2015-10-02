@@ -82,7 +82,7 @@
                 http://developer.android.com/guide/components/intents-filters.html
         -->
         <activity
-            android:name=".Controllers.Splash"
+            android:name=".controller.Splash"
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
@@ -92,7 +92,7 @@
         </activity>
 
         <activity
-            android:name=".Controllers.MainActivity"
+            android:name=".controller.MainActivity"
             android:screenOrientation="portrait"/>
 
     </application>

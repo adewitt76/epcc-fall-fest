@@ -7,7 +7,7 @@
  * Author: Aaron DeWitt & Christian Murga
  */
 
-package edu.epcc.epccfallfestapp.Controllers;
+package edu.epcc.epccfallfestapp.controller;
 
 import android.app.Activity;
 import android.content.Context;

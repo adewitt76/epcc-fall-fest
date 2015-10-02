@@ -7,7 +7,7 @@
  * Author: Aaron DeWitt
  */
 
-package edu.epcc.epccfallfestapp.Controllers;
+package edu.epcc.epccfallfestapp.controller;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;

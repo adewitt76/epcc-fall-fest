@@ -1,10 +1,10 @@
-package edu.epcc.epccfallfestapp.Model;
+package edu.epcc.epccfallfestapp.model;
 
 import android.view.View;
 
 import java.io.Serializable;
 
-import edu.epcc.epccfallfestapp.Controllers.FoundMonsterFragment;
+import edu.epcc.epccfallfestapp.controller.FoundMonsterFragment;
 
 /**
  * A sprite set is a collection of sprites that is used to hold all sprites that need to be
