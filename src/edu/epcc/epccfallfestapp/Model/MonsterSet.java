@@ -1,4 +1,4 @@
-package edu.epcc.epccfallfestapp.Sprite;
+package edu.epcc.epccfallfestapp.Model;
 
 import edu.epcc.epccfallfestapp.R;
 

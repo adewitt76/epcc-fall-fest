@@ -3,12 +3,10 @@ package edu.epcc.epccfallfestapp;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -23,6 +21,8 @@ import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import edu.epcc.epccfallfestapp.Model.Game;
 
 /**
  * The GameFragment is the controller for the main view of the application. This fragment
