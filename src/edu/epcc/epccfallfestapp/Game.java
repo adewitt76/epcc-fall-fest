@@ -16,12 +16,10 @@ import java.io.Serializable;
 
 import edu.epcc.epccfallfestapp.Sprite.MonsterSet;
 
-//this is to check is the push worked
 public class Game implements Serializable{
 		
 	private static final long serialVersionUID = 9203770842176328248L;
-	
-	private String loginName;
+
 	private long score;
 	private long startTime;
 	private int monstersFound;
@@ -42,59 +40,35 @@ public class Game implements Serializable{
         }
     }
 	
-	public FoundMonsterFragment update(String BC_ID){
-
+	public FoundMonsterFragment update(String BC_ID) {
 		FoundMonsterFragment foundMonsterFragment = monsters.checkSpritesQRCodes(BC_ID);
 		if(foundMonsterFragment != null) {
 			calcScore(1);
 			monstersFound++;
 		}
-
 		return foundMonsterFragment;
 	}
 	
-	private void calcScore(int bonusMultiplier)
-	{
+	private void calcScore(int bonusMultiplier) {
 		long time = System.currentTimeMillis();
 		int scoreIndex = ((int)(time-startTime)/1000);
 		if(scoreIndex > 9750)  score += 250;
-		//you got 83 minutes to find all the monsters to get a score
 		else score += (10000-scoreIndex)*bonusMultiplier;
-		
-	}
-	
-	public boolean timesUp(){
-		long time = System.currentTimeMillis();
-        int endTime = ((int)(time-startTime)/1000)/60;
-		if( endTime > 83) return true;
-		else return false;
 	}
 
-	public void setName(String loginName){
-		this.loginName = loginName;
-	}
-	
-	public String getName(){
-		return loginName;
-	}
-	
-	public void setScore(long score){
-		this.score = score;
-	}
-	
-	public long getScore(){
+    public long getScore() {
 		return score;
 	}
-	
+
 	public int monstersFound() {
 		return monstersFound;
 	}
-	
-	public boolean gameEnded(){
+
+	public boolean gameEnded() {
 		return gameEnded;
 	}
-	
-	public void setGameEnded(boolean e){
+
+	public void setGameEnded(boolean e) {
 		gameEnded = e;
 	}
 }
