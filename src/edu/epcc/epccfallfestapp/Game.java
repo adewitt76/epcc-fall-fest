@@ -10,9 +10,11 @@
 package edu.epcc.epccfallfestapp;
 
 
+import android.view.View;
+
 import java.io.Serializable;
 
-import edu.epcc.epccfallfestapp.GameFragment;
+import edu.epcc.epccfallfestapp.Sprite.MonsterSet;
 
 //this is to check is the push worked
 public class Game implements Serializable{
@@ -24,108 +26,31 @@ public class Game implements Serializable{
 	private long startTime;
 	private int monstersFound;
 	private boolean gameEnded;
-	
-	private boolean foundAlien;
-	private boolean foundBlob;
-	private boolean foundChutulu;
-	private boolean foundClops;
-	private boolean foundFrankie;
-	private boolean foundMummy;
-	private boolean foundTomato;
-	private boolean foundVampire;
-	private boolean foundWerewolf;
-	private boolean foundWitch;
-	private boolean foundYeti;
+	private MonsterSet monsters;
 	
 	public Game(){
 		score = 0;
 		monstersFound = 0;
 		startTime = System.currentTimeMillis();
 		gameEnded = false;
-		
-		foundBlob = false;
-		foundChutulu = false;
-		foundClops = false;
-		foundFrankie = false;
-		foundMummy = false;
-		foundTomato = false;
-		foundVampire = false;
-		foundWerewolf = false;
-		foundWitch = false;
-		foundYeti = false;
+		monsters = new MonsterSet();
 	}
+
+	public void initMonsterImages(View view) {
+        if (view != null) {
+            monsters.initSpriteImages(view);
+        }
+    }
 	
-	public boolean update(String BC_ID){
-		
-		if(BC_ID == GameFragment.BC_ALIEN && !foundAlien){
-			// an example of how to use this method
-			calcScore(1);
-			foundAlien = true;
-			monstersFound++;
-			return true;
-		}else if(BC_ID == GameFragment.BC_BLOB && !foundBlob){
-			// an example of how to use this method
+	public FoundMonsterFragment update(String BC_ID){
+
+		FoundMonsterFragment foundMonsterFragment = monsters.checkSpritesQRCodes(BC_ID);
+		if(foundMonsterFragment != null) {
 			calcScore(1);
 			monstersFound++;
-			foundBlob = true;
-			return true;
-		}else if(BC_ID == GameFragment.BC_CHUTULU && !foundChutulu){
-			// an example of how to use this method
-			calcScore(1);
-			foundChutulu = true;
-			monstersFound++;
-			return true;
-		}else if(BC_ID == GameFragment.BC_CLOPS && !foundClops){
-			// an example of how to use this method
-			calcScore(1);
-			foundClops = true;
-			monstersFound++;
-			return true;
-		}else if(BC_ID == GameFragment.BC_FRANKIE && !foundFrankie){
-			// an example of how to use this method
-			calcScore(1);
-			foundFrankie = true;
-			monstersFound++;
-			return true;
-		}else if(BC_ID == GameFragment.BC_MUMMY && !foundMummy){
-			// an example of how to use this method
-			calcScore(1);
-			foundMummy = true;
-			monstersFound++;
-			return true;
-		}else if(BC_ID == GameFragment.BC_TOMATO && !foundTomato){
-			// an example of how to use this method
-			calcScore(1);
-			foundTomato = true;
-			monstersFound++;
-			return true;
-		}else if(BC_ID == GameFragment.BC_VAMPIRE && !foundVampire){
-			// an example of how to use this method
-			calcScore(1);
-			foundVampire = true;
-			monstersFound++;
-			return true;
-		}else if(BC_ID == GameFragment.BC_WEREWOLF && !foundWerewolf){
-			// an example of how to use this method
-			calcScore(1);
-			foundWerewolf = true;
-			monstersFound++;
-			return true;
-		}else if(BC_ID == GameFragment.BC_WITCH && !foundWitch){
-			// an example of how to use this method
-			calcScore(1);
-			foundWitch = true;
-			monstersFound++;
-			return true;
 		}
-		if(BC_ID == GameFragment.BC_YETI && !foundYeti){
-			// an example of how to use this method
-			calcScore(1);
-			foundYeti = true;
-			monstersFound++;
-			return true;
-		}
-		else return false;
+
+		return foundMonsterFragment;
 	}
 	
 	private void calcScore(int bonusMultiplier)
@@ -140,10 +65,11 @@ public class Game implements Serializable{
 	
 	public boolean timesUp(){
 		long time = System.currentTimeMillis();
-		if(((int)(time-startTime)/1000)/60 > 83) return true;
+        int endTime = ((int)(time-startTime)/1000)/60;
+		if( endTime > 83) return true;
 		else return false;
 	}
-	
+
 	public void setName(String loginName){
 		this.loginName = loginName;
 	}
@@ -171,16 +97,4 @@ public class Game implements Serializable{
 	public void setGameEnded(boolean e){
 		gameEnded = e;
 	}
-	
-	public boolean foundAlien() { return foundAlien;}
-	public boolean foundBlob() { return foundBlob;}
-	public boolean foundChutulu() { return foundChutulu;} 
-	public boolean foundClops() { return foundClops;}
-	public boolean foundFrankie() { return foundFrankie;}
-	public boolean foundMummy() { return foundMummy;}
-	public boolean foundTomato() { return foundTomato;}
-	public boolean foundVampire() { return foundVampire;}
-	public boolean foundWerewolf() { return foundWerewolf;}
-	public boolean foundWitch() { return foundWitch;}
-	public boolean foundYeti() { return foundYeti;}
 }
