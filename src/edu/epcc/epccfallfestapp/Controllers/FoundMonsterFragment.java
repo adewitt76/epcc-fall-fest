@@ -7,7 +7,7 @@
  * Author: Aaron DeWitt
  */
 
-package edu.epcc.epccfallfestapp;
+package edu.epcc.epccfallfestapp.Controllers;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import edu.epcc.epccfallfestapp.R;
 
 public class FoundMonsterFragment extends Fragment {
 

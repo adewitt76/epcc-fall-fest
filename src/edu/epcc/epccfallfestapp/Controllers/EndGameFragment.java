@@ -7,7 +7,7 @@
  * Author: Aaron DeWitt
  */
 
-package edu.epcc.epccfallfestapp;
+package edu.epcc.epccfallfestapp.Controllers;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import edu.epcc.epccfallfestapp.R;
 
 public class EndGameFragment extends Fragment {
 		

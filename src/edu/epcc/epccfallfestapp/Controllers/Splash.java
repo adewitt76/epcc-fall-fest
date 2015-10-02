@@ -7,7 +7,7 @@
  * Author: Aaron DeWitt & Christian Murga
  */
 
-package edu.epcc.epccfallfestapp;
+package edu.epcc.epccfallfestapp.Controllers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -23,6 +22,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import edu.epcc.epccfallfestapp.R;
 
 
 public class Splash extends Activity
@@ -56,7 +56,7 @@ public class Splash extends Activity
 	{
 		
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.splash);	
+		setContentView(R.layout.splash);
 		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		

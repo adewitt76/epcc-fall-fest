@@ -1,5 +1,5 @@
 
-package edu.epcc.epccfallfestapp;
+package edu.epcc.epccfallfestapp.Controllers;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,6 +23,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import edu.epcc.epccfallfestapp.Model.Game;
+import edu.epcc.epccfallfestapp.R;
 
 /**
  * The GameFragment is the controller for the main view of the application. This fragment

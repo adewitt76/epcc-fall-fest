@@ -7,13 +7,15 @@
  * Author: Aaron DeWitt
  */
 
-package edu.epcc.epccfallfestapp;
+package edu.epcc.epccfallfestapp.Controllers;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.widget.FrameLayout;
 import android.os.Bundle;
+
+import edu.epcc.epccfallfestapp.R;
 
 public class MainActivity extends FragmentActivity {
 	
