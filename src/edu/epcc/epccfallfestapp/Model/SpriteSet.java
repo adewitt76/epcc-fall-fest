@@ -4,7 +4,7 @@ import android.view.View;
 
 import java.io.Serializable;
 
-import edu.epcc.epccfallfestapp.FoundMonsterFragment;
+import edu.epcc.epccfallfestapp.Controllers.FoundMonsterFragment;
 
 /**
  * A sprite set is a collection of sprites that is used to hold all sprites that need to be

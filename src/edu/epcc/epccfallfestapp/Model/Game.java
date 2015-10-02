@@ -14,7 +14,7 @@ import android.view.View;
 
 import java.io.Serializable;
 
-import edu.epcc.epccfallfestapp.FoundMonsterFragment;
+import edu.epcc.epccfallfestapp.Controllers.FoundMonsterFragment;
 
 public class Game implements Serializable{
 		
