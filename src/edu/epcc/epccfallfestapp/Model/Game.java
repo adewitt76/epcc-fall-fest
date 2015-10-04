@@ -3,7 +3,7 @@
  * This application is designed as a scavenger hunt game to 
  * be deployed and played at the EPCC Fall Festival.
  * 
- * File: GameFragment.java
+ * File: Game.java
  * Author: Aaron DeWitt
  */
 
@@ -16,6 +16,9 @@ import java.io.Serializable;
 
 import edu.epcc.epccfallfestapp.controller.FoundMonsterFragment;
 
+/**
+ * The main model of the game.
+ */
 public class Game implements Serializable{
 		
 	private static final long serialVersionUID = 9203770842176328248L;
