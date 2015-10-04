@@ -1,14 +1,4 @@
-/*
- * EPCC Fall Festival Android app
- * This application is designed as a scavenger hunt game to 
- * be deployed and played at the EPCC Fall Festival.
- * 
- * File: Game.java
- * Author: Aaron DeWitt
- */
-
 package edu.epcc.epccfallfestapp.model;
-
 
 import android.view.View;
 
@@ -22,6 +12,8 @@ import edu.epcc.epccfallfestapp.controller.FoundMonsterFragment;
  * application. The model should be completely decoupled from the view and controller so that
  * any changes to the other components will not have an affect on it. The Game class is Serializable
  * so that the state of the game can be saved.
+ *
+ * Author: Aaron DeWitt adewitt76@gmail.com
  */
 public class Game implements Serializable{
 		

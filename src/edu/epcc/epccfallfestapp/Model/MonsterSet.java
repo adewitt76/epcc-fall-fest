@@ -5,10 +5,10 @@ import edu.epcc.epccfallfestapp.R;
 /**
  * This object is a SpriteSet. All functions of a SpriteSet are kept the SpriteSet object. The idea
  * here is that we have easy access to the necessary data for each of our sprites without the
- * distractions of implementation. Therefor, only a constructor is exists here. And the constructor
+ * distractions of implementations. Therefore, only a constructor exists here. And the constructor
  * only contains unique data. This eliminates having to search for this information elsewhere.
- * Author: Aaron DeWitt
- * File: MonsterSet.java
+ *
+ * Author: Aaron DeWitt adewitt76@gmail.com
  */
 public class MonsterSet extends SpriteSet  {
     public MonsterSet() {
