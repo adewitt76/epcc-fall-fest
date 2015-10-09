@@ -9,6 +9,7 @@
 
 package edu.epcc.epccfallfestapp.controller;
 
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +18,7 @@ import android.os.Bundle;
 
 import edu.epcc.epccfallfestapp.R;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements TicketFragment.OnFragmentInteractionListener {
 	
 	public static FragmentManager fm;
 	public static FrameLayout frame;
@@ -35,4 +36,8 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
+	@Override
+	public void onFragmentInteraction(Uri uri) {
+		 // TODO: implement Interactions with TicketFragment
+	}
 }

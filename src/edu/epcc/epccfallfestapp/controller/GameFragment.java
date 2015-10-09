@@ -42,6 +42,8 @@ public class GameFragment extends Fragment{
 	private TextView mCurrentScore;
 	private IntentIntegrator scanIntegrator;
 
+	private boolean registered = false; // TODO: change this
+
     /**
      * This function is the start of the life for this object. Here at the beginning of this objects
      * lifecycle we are loading a file, if it exists, called game.ser. This file was saved when
@@ -108,6 +110,12 @@ public class GameFragment extends Fragment{
 	@Override
 	public void onStart(){
 		super.onResume();
+		if(!registered){
+			mScanButton.setEnabled(false);
+			getFragmentManager().beginTransaction().add(R.id.mainContainer, new TicketFragment()).commit();
+		} else {
+			mScanButton.setEnabled(true);
+		}
 		if(game.gameEnded()){
 			mScanButton.setEnabled(false);
 			getFragmentManager().beginTransaction().replace(R.id.mainContainer, new EndGameFragment()).commit();

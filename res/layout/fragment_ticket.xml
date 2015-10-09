@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+ * EPCC Fall Festival Android app
+ * This application is designed as a scavenger hunt game to 
+ * be deployed and played at the EPCC Fall Festival.
+ * 
+ * File: GameFragment.java
+ * Author: Aaron DeWitt
+ -->
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainContainer"
+    android:orientation = "vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black" >
+
+    <ImageView
+        android:id="@+id/main_screen_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/graident_background"
+        android:contentDescription="@string/generic_description" />
+
+    <Button
+        android:id="@+id/photoButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/photo_button"
+        android:enabled="false" />
+
+
+    <ImageView
+        android:id="@+id/moon_png"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:scaleType="fitCenter"
+        android:layout_above="@+id/hill_2_png"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="@string/generic_description"
+        android:src="@drawable/moon" />
+
+    <ImageView
+        android:id="@+id/hill_2_png"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_above="@+id/photoButton"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="back row of hills"
+        android:scaleType="fitXY"
+        android:src="@drawable/hill_2" />
+
+    <ImageView
+        android:id="@+id/hill_1_png"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_above="@+id/photoButton"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="front row of hills"
+        android:scaleType="fitXY"
+        android:src="@drawable/hill_1" />
+
+    <ImageView
+        android:id="@+id/logo_png"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="logo on main fragment"
+        android:scaleType="fitStart"
+        android:src="@drawable/monster_logo" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout"
+        android:background="#320288fd"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:clickable="false">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Ticket number:"
+            android:id="@+id/ticketTextView"
+            android:textColor="@color/red"
+            android:textSize="@dimen/ticket_size"
+            android:typeface="serif"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            />
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:textSize="@dimen/ticket_size"
+            android:text="1X2De45678"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:background="#99ffffff"
+            android:theme="@style/Theme.Holoween"
+            android:layout_below="@id/ticketTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            />
+
+        <Button
+            style="@style/Theme.Holoween"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go!!!"
+            android:id="@+id/ticket_button"
+            android:layout_below="@+id/editText"
+            android:layout_alignRight="@+id/editText"
+            android:layout_alignEnd="@+id/editText"
+            android:layout_marginTop="15dp"
+            android:background="@android:color/darker_gray" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

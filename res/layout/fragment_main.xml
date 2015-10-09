@@ -232,4 +232,12 @@
        	    android:textSize="20sp"
        	    android:textColor="@color/red" />
 
+	<ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/TicketBoxView"
+		android:src="@drawable/ticket_box"
+		android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

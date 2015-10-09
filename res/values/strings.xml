@@ -26,4 +26,7 @@
 	<string name="found_witch">You found the witch!!</string>
 	<string name="found_yeti">You found the Yeti!!!</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
