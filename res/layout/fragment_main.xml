@@ -232,12 +232,63 @@
        	    android:textSize="20sp"
        	    android:textColor="@color/red" />
 
-	<ImageView
+
+	<RelativeLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/TicketBoxView"
-		android:src="@drawable/ticket_box"
 		android:layout_centerVertical="true"
-		android:layout_centerHorizontal="true" />
+		android:layout_centerHorizontal="true"
+		android:id="@+id/ticketBoxLayout"
+		android:visibility="invisible"
+		>
 
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/TicketBoxView"
+			android:src="@drawable/ticket_box"
+			android:layout_centerVertical="true"
+			android:layout_centerHorizontal="true" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:text="Ticket number:"
+			android:id="@+id/ticketTextView"
+			android:textColor="@color/red"
+			android:textSize="@dimen/ticket_size"
+			android:typeface="serif"
+			android:layout_marginTop="20dp"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true" />
+
+		<EditText
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/ticketBoxEditText"
+			android:textSize="@dimen/ticket_size"
+			android:textColor="@color/black"
+			android:textAlignment="center"
+			android:background="#99ffffff"
+			android:theme="@style/Theme.Holoween"
+			android:layout_below="@id/ticketTextView"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="15dp"
+			android:enabled="false" />
+
+		<Button
+			style="@style/Theme.Holoween"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Go!!!"
+			android:id="@+id/ticketBoxButton"
+			android:layout_below="@+id/ticketBoxEditText"
+			android:layout_alignRight="@+id/ticketBoxEditText"
+			android:layout_alignEnd="@+id/ticketBoxEditText"
+			android:layout_marginTop="15dp"
+			android:background="@android:color/darker_gray"
+			android:enabled="false" />
+
+	</RelativeLayout>
 </RelativeLayout>

@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -42,7 +44,11 @@ public class GameFragment extends Fragment{
 	private TextView mCurrentScore;
 	private IntentIntegrator scanIntegrator;
 
-	private boolean registered = false; // TODO: change this
+	private RelativeLayout ticketBox;
+	private EditText ticketBoxText;
+	private Button ticketBoxButton;
+
+	private boolean registered = true; // TODO: change this
 
     /**
      * This function is the start of the life for this object. Here at the beginning of this objects
@@ -90,6 +96,10 @@ public class GameFragment extends Fragment{
 
         mCurrentScore = (TextView)v.findViewById(R.id.current_score);
 
+		ticketBox = (RelativeLayout)v.findViewById(R.id.ticketBoxLayout);
+		ticketBoxText = (EditText)v.findViewById(R.id.ticketBoxEditText);
+		ticketBoxButton = (Button)v.findViewById(R.id.ticketBoxButton);
+
         mCurrentScore.setText("" + game.getScore());
 		
 		mScanButton = (Button)v.findViewById(R.id.photoButton);
@@ -111,10 +121,7 @@ public class GameFragment extends Fragment{
 	public void onStart(){
 		super.onResume();
 		if(!registered){
-			mScanButton.setEnabled(false);
-			getFragmentManager().beginTransaction().add(R.id.mainContainer, new TicketFragment()).commit();
-		} else {
-			mScanButton.setEnabled(true);
+			displayTicketBox(true);
 		}
 		if(game.gameEnded()){
 			mScanButton.setEnabled(false);
@@ -157,7 +164,7 @@ public class GameFragment extends Fragment{
             mCurrentScore.setText("" + game.getScore());
         }
 
-		Log.i(TAG,"Monsters Found: "+ game.monstersFound());
+		Log.i(TAG, "Monsters Found: " + game.monstersFound());
 		if(game.monstersFound() == 11){
 			mScanButton.setEnabled(false);
 			game.setGameEnded(true);
@@ -169,5 +176,18 @@ public class GameFragment extends Fragment{
 			getFragmentManager().beginTransaction().replace(R.id.mainContainer, displayFragment).addToBackStack(TAG).commit();
 		
 	}
-	
+
+	private void displayTicketBox(boolean show) {
+		if (show){
+			mScanButton.setEnabled(false);
+			ticketBox.setVisibility(RelativeLayout.VISIBLE);
+			ticketBoxText.setEnabled(true);
+			ticketBoxButton.setEnabled(true);
+		} else {
+			ticketBoxButton.setEnabled(false);
+			ticketBoxText.setEnabled(false);
+			ticketBox.setVisibility(RelativeLayout.INVISIBLE);
+			mScanButton.setEnabled(true);
+		}
+	}
 }
