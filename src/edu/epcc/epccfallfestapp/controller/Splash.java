@@ -1,12 +1,3 @@
-/*
- * EPCC Fall Festival Android app
- * This application is designed as a scavenger hunt game to 
- * be deployed and played at the EPCC Fall Festival.
- * 
- * File: GameFragment.java
- * Author: Aaron DeWitt & Christian Murga
- */
-
 package edu.epcc.epccfallfestapp.controller;
 
 import android.app.Activity;
@@ -25,10 +16,8 @@ import android.widget.RelativeLayout;
 import edu.epcc.epccfallfestapp.R;
 
 
-public class Splash extends Activity
-{
-	private static final String TAG = "SplashActivity";
-	
+public class Splash extends Activity {
+
 	private ImageView mEPCCLogoView;
 	private ImageView mCSITLogoView;
 	private ImageView mMonsterLogoView;
@@ -52,8 +41,7 @@ public class Splash extends Activity
 	final Context context = this;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
@@ -258,8 +246,7 @@ public class Splash extends Activity
 			}
 
 			@Override
-			public void onFinish()
-			{
+			public void onFinish() {
 				if(running){
 				if(mSongPlayer != null){
 					mSongPlayer.release();
