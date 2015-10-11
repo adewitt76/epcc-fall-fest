@@ -36,8 +36,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 	private boolean mAutoStartSignInFlow = true;
 	private boolean mSignInClicked = false;
 
-	private GameFragment gameFragment;
-
 	public static FragmentManager fm;
 	public static FrameLayout frame;
 	
@@ -56,13 +54,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		setContentView(R.layout.activity_fragment);
 		frame = (FrameLayout)findViewById(R.id.fragmentContainer);
 		fm = getSupportFragmentManager();
-		gameFragment = (GameFragment) fm.findFragmentById(R.id.mainContainer);
-		if(gameFragment == null){
-			gameFragment = new GameFragment();
-			fm.beginTransaction().add(R.id.fragmentContainer, gameFragment).commit();
+		Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
+		if(fragment == null){
+			fragment = new GameFragment();
+			fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
 		}
 
-		findViewById(R.id.badConnectionButton).setOnClickListener(this);
+		//findViewById(R.id.badConnectionButton).setOnClickListener(this);
 	}
 
 	/*
@@ -86,7 +84,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 	// The following are part of the Google APIs
 	@Override
 	public void onConnected(Bundle bundle) {
-		gameFragment.hideBadConnectionBox();
+		//gameFragment.hideBadConnectionBox();
 	}
 
 	@Override
@@ -119,7 +117,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 			}
 		}
 
-		gameFragment.showBadConnectionBox();
+		//gameFragment.showBadConnectionBox();
 	}
 
 	/*
