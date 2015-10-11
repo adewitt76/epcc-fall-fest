@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-e0a18e771d54b78bbc7e92781978b786fc764685.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="82825756edeeb3b56b15e73b2edd56e93da5a444">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\classes-64a09bd31b4dd0a2df5cb3cbc8154d0ef72b6aa6.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\exploded-aar\com.android.support\appcompat-v7\20.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\classes-1dc0b9febde89a0616151124408f3a9008cbdf5c.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="3c729e6d76a36c5dc27e6a4c4009296f49eaa88a">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\classes-a72661f619b97ead8c466224d987e4a0f8fc915c.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\libs\Parse-1.7.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="403b8fa0a90f1ff714ad1f40382e7a448ed4f25b">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\Parse-1.7.0-54b57ca0bf856c416efe021755d15fed4ab3c1ad.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="993834cb17d07d51b92db89d2c330243592ebf77">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\classes-6b518ceb5e31ad236b5422c13a6844735ea1fd34.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\libs\android-support-v4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="efec67655f6db90757faa37201efcee2a9ec3507">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\android-support-v4-8b96fe16ea5a931f0c46a6391a942f12495f32d3.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="d0dda274b703dd9c5bb056867649d22b4171ae7d">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\classes-76619e05c3c51e13a1139e4fdd9eda8c8da81ae9.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="d61920aba361832a9545a43fa8c9453eb02f18f7">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\classes-afe1526ee2df08e03d01dd6603fc2068e43055fa.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\libs\bolts-android-1.1.2.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="91c20388c9a45f62b5ed8fe0502bb76ff6251fc7">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\bolts-android-1.1.2-75427b4dd8f279add3e7541e9862c6daad3ea8f2.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\classes-21e04c7cd342f074b2c0fa71258a03b0b37cd22f.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\exploded-aar\epcc-fall-fest\BaseGameUtils\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="bd9690d3f92eeeeecc71648eea7ce2b5029cc4df">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\classes-7e704d34307beea40f10a836ed08b7e51d2a7bb6.jar" />
+    </item>
+    <item
+        jar="C:\Users\adewi\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="C:\Users\adewi\StudioProjects\epcc-fall-fest\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-afedd7bc7b8395f3b46e243ebfd6461287e14b92.jar" />
+    </item>
+
+</items>

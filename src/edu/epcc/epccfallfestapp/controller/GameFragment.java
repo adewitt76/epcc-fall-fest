@@ -48,6 +48,9 @@ public class GameFragment extends Fragment{
 	private EditText ticketBoxText;
 	private Button ticketBoxButton;
 
+	private RelativeLayout badConnectionBox;
+	private Button badConnectionButton;
+
 	private boolean registered = true; // TODO: change this
 
     /**
@@ -83,7 +86,7 @@ public class GameFragment extends Fragment{
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, final Bundle savedInstanceState){
-		
+
 		getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         View v = inflater.inflate(R.layout.fragment_main, parent, false);
@@ -99,6 +102,9 @@ public class GameFragment extends Fragment{
 		ticketBox = (RelativeLayout)v.findViewById(R.id.ticketBoxLayout);
 		ticketBoxText = (EditText)v.findViewById(R.id.ticketBoxEditText);
 		ticketBoxButton = (Button)v.findViewById(R.id.ticketBoxButton);
+
+		badConnectionBox = (RelativeLayout)v.findViewById(R.id.badConnectionBox);
+		badConnectionButton = (Button)v.findViewById(R.id.badConnectionButton);
 
         mCurrentScore.setText("" + game.getScore());
 		
@@ -116,10 +122,10 @@ public class GameFragment extends Fragment{
 		
 		return v;
 	}
-	
+
 	@Override
 	public void onStart(){
-		super.onResume();
+		super.onStart();
 		if(!registered){
 			displayTicketBox(true);
 		}
@@ -131,7 +137,7 @@ public class GameFragment extends Fragment{
 
 	@Override
 	public void onStop(){
-		super.onPause();
+		super.onStop();
 		File file = new File(getActivity().getFilesDir(), "game.ser");
 		file.delete();
 		try {
@@ -189,5 +195,17 @@ public class GameFragment extends Fragment{
 			ticketBox.setVisibility(RelativeLayout.INVISIBLE);
 			mScanButton.setEnabled(true);
 		}
+	}
+
+	public void showBadConnectionBox() {
+		mScanButton.setEnabled(false);
+		badConnectionBox.setVisibility(RelativeLayout.VISIBLE);
+		badConnectionButton.setEnabled(true);
+	}
+
+	public void hideBadConnectionBox() {
+		badConnectionButton.setEnabled(false);
+		badConnectionBox.setVisibility(RelativeLayout.INVISIBLE);
+		mScanButton.setEnabled(true);
 	}
 }
