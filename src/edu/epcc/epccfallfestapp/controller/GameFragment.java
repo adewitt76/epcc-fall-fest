@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -21,6 +22,10 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameUtils;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -35,9 +40,9 @@ import edu.epcc.epccfallfestapp.R;
  * File: GameFragment.java
  * Author: Aaron DeWitt
  */
-public class GameFragment extends Fragment{
+public class GameFragment extends Fragment {
 
-	private static final String TAG = "MonsterFragment";
+	private static final String TAG = "GameFragment";
 
 	private Game game;
 	private Button mScanButton;
@@ -51,7 +56,19 @@ public class GameFragment extends Fragment{
 	private RelativeLayout badConnectionBox;
 	private Button badConnectionButton;
 
+	private View.OnClickListener mainActivity;
+
 	private boolean registered = true; // TODO: change this
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mainActivity = (View.OnClickListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(mainActivity + " needs to implement View.OnClickListener");
+		}
+	}
 
     /**
      * This function is the start of the life for this object. Here at the beginning of this objects
@@ -105,6 +122,7 @@ public class GameFragment extends Fragment{
 
 		badConnectionBox = (RelativeLayout)v.findViewById(R.id.badConnectionBox);
 		badConnectionButton = (Button)v.findViewById(R.id.badConnectionButton);
+        badConnectionButton.setOnClickListener(mainActivity);
 
         mCurrentScore.setText("" + game.getScore());
 		
@@ -131,7 +149,7 @@ public class GameFragment extends Fragment{
 		}
 		if(game.gameEnded()){
 			mScanButton.setEnabled(false);
-			getFragmentManager().beginTransaction().replace(R.id.mainContainer, new EndGameFragment()).commit();
+			getFragmentManager().beginTransaction().replace(R.id.game_fragment, new EndGameFragment()).commit();
 		}
 	}
 
@@ -175,11 +193,15 @@ public class GameFragment extends Fragment{
 			mScanButton.setEnabled(false);
 			game.setGameEnded(true);
 			Log.i(TAG,"End Game Loader");
-			getFragmentManager().beginTransaction().replace(R.id.mainContainer, new EndGameFragment()).commit();
+			getFragmentManager().beginTransaction().replace(R.id.game_fragment, new EndGameFragment()).commit();
 		}
 			
 		if(displayFragment != null)
-			getFragmentManager().beginTransaction().replace(R.id.mainContainer, displayFragment).addToBackStack(TAG).commit();
+			getFragmentManager()
+					.beginTransaction()
+					.add(R.id.game_fragment, displayFragment)
+					.addToBackStack(TAG)
+					.commit();
 		
 	}
 
@@ -198,6 +220,7 @@ public class GameFragment extends Fragment{
 	}
 
 	public void showBadConnectionBox() {
+        Log.e(TAG,"In showBadConnectionBox()");
 		mScanButton.setEnabled(false);
 		badConnectionBox.setVisibility(RelativeLayout.VISIBLE);
 		badConnectionButton.setEnabled(true);
@@ -208,4 +231,5 @@ public class GameFragment extends Fragment{
 		badConnectionBox.setVisibility(RelativeLayout.INVISIBLE);
 		mScanButton.setEnabled(true);
 	}
+
 }

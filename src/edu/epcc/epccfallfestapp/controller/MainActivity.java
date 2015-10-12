@@ -12,6 +12,7 @@ package edu.epcc.epccfallfestapp.controller;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.os.Bundle;
@@ -25,7 +26,9 @@ import com.google.example.games.basegameutils.BaseGameUtils;
 import edu.epcc.epccfallfestapp.R;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,
-		GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+		GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+
+	private static final String TAG = "MainActivity";
 
 	// used to establish a connection with Google
 	private GoogleApiClient googleApiClient;
@@ -40,7 +43,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 	public static FrameLayout frame;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Create the Google Api Client with access to the Play Games services
@@ -50,6 +53,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 				.addApi(Games.API).addScope(Games.SCOPE_GAMES)
 						// add other APIs and scopes here as needed
 				.build();
+
 
 		setContentView(R.layout.activity_fragment);
 		frame = (FrameLayout)findViewById(R.id.fragmentContainer);
@@ -63,20 +67,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		//findViewById(R.id.badConnectionButton).setOnClickListener(this);
 	}
 
-	/*
-		Here the app tries to sign in silently as a connection with google is required to play the
-		game. This is done in the onStart function. If a connection is established the onConnected
-		function is called. If a connection cannot be established the on connection failed function
-		is called.
-	 */
 	@Override
-	protected void onStart() {
+	public void onStart() {
 		super.onStart();
 		googleApiClient.connect();
 	}
 
 	@Override
-	protected void onStop() {
+	public void onStop() {
 		super.onStop();
 		googleApiClient.disconnect();
 	}
@@ -84,7 +82,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 	// The following are part of the Google APIs
 	@Override
 	public void onConnected(Bundle bundle) {
-		//gameFragment.hideBadConnectionBox();
+		Log.i(TAG, "Connection established");
+		GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+		if(gameFragment != null) gameFragment.hideBadConnectionBox();
 	}
 
 	@Override
@@ -94,6 +94,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 	@Override
 	public void onConnectionFailed(ConnectionResult connectionResult) {
+
+		if(connectionResult.getErrorCode() == ConnectionResult.SIGN_IN_REQUIRED){
+			Log.e(TAG,"Sign in required");
+		}
+
 		if (mResolvingConnectionFailure) {
 			// Already resolving
 			return;
@@ -117,17 +122,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 			}
 		}
 
-		//gameFragment.showBadConnectionBox();
+		Log.e(TAG,"Connection Failed");
+		GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+		if(gameFragment != null) {
+			Log.i(TAG,"Found gameFragment");
+			gameFragment.showBadConnectionBox();
+		}
+		else Log.e(TAG,"gameFragment == null");
 	}
-
-	/*
-		onClick listener listens to the button press from the GameFragment to retry sign in.
-	 */
 
 	@Override
 	public void onClick(View view) {
 		if(view.getId() == R.id.badConnectionButton) {
-			googleApiClient.connect();
+			Log.i(TAG, "badConnectionButton clicked");
+			if(googleApiClient.isConnected()) {
+				GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+				if(gameFragment != null) gameFragment.hideBadConnectionBox();
+			}
+			else {
+				googleApiClient.disconnect();
+				googleApiClient.connect();
+			}
 		}
 	}
 }

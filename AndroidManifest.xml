@@ -41,7 +41,9 @@
          permission from the devices owner. These declarations of permissions will allow
          the device to have access to these features, while prompting the user for permission.
     -->
-   <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="USE_CREDENTIALS" />
 
     <!--
         The application tag, along with the manifest tag, is a required tag. This tag or
