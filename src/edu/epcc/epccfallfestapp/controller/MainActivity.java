@@ -64,7 +64,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 			fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
 		}
 
-		//findViewById(R.id.badConnectionButton).setOnClickListener(this);
 	}
 
 	@Override
@@ -95,12 +94,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 	@Override
 	public void onConnectionFailed(ConnectionResult connectionResult) {
 
-		if(connectionResult.getErrorCode() == ConnectionResult.SIGN_IN_REQUIRED){
-			Log.e(TAG,"Sign in required");
-		}
 
 		if (mResolvingConnectionFailure) {
 			// Already resolving
+			mResolvingConnectionFailure = false;
+			googleApiClient.connect();
 			return;
 		}
 
@@ -122,25 +120,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 			}
 		}
 
-		Log.e(TAG,"Connection Failed");
-		GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
-		if(gameFragment != null) {
-			Log.i(TAG,"Found gameFragment");
-			gameFragment.showBadConnectionBox();
-		}
-		else Log.e(TAG,"gameFragment == null");
+		GameFragment gameFragment = ((GameFragment) getSupportFragmentManager()
+			.findFragmentById(R.id.fragmentContainer));
+		if(gameFragment != null) gameFragment.showBadConnectionBox();
 	}
 
 	@Override
 	public void onClick(View view) {
 		if(view.getId() == R.id.badConnectionButton) {
-			Log.i(TAG, "badConnectionButton clicked");
+			mSignInClicked = true;
 			if(googleApiClient.isConnected()) {
 				GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
 				if(gameFragment != null) gameFragment.hideBadConnectionBox();
 			}
 			else {
-				googleApiClient.disconnect();
 				googleApiClient.connect();
 			}
 		}

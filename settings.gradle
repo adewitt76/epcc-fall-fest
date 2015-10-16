@@ -1,1 +1,1 @@
-include ':BaseGameUtils'
+include ':BaseGameUtils', ':registration_server'
