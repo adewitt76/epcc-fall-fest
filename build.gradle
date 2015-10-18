@@ -14,9 +14,16 @@ dependencies {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:/Users/adewi/StudioProjects/epcc-fall-fest/KeyStore/FallFestKey.jks')
+            keyAlias 'androiddebugkey'
+            keyPassword 'EMpire1976'
+            storePassword 'EMpire1976'
+        }
+    }
     compileSdkVersion 20
     buildToolsVersion "20.0.0"
-
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
