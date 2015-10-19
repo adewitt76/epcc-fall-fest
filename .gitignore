@@ -1,18 +1,7 @@
-# Can ignore specific files
 .gradle
-.idea
-.settings
-bin
-build
-gen
-local.properties
-.classpath
-.project
-epcc-fall-fest.iml
-
-# Use wildcards as well
-# *~
-# *.swp
-
-# Can also ignore all directories and files in a directory.
-# tmp/**/* 
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
