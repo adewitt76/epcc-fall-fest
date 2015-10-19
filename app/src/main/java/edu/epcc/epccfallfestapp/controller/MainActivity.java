@@ -9,6 +9,8 @@
 
 package edu.epcc.epccfallfestapp.controller;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,14 +23,21 @@ import com.google.android.gms.*;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
+import java.io.IOException;
+
 import edu.epcc.epccfallfestapp.R;
+import edu.epcc.epccfallfestapp.backend.registrationApi.RegistrationApi;
+import edu.epcc.epccfallfestapp.backend.registrationApi.model.RegistrationBean;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,
 		GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
 	private static final String TAG = "MainActivity";
+	private RegistrationApi registar;
 
 	// used to establish a connection with Google
 	private GoogleApiClient googleApiClient;
@@ -85,6 +94,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		Log.i(TAG, "Connection established");
 		GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
 		if(gameFragment != null) gameFragment.hideBadConnectionBox();
+		if(!gameFragment.isRegistered()) gameFragment.showTicketBox(true);
 	}
 
 	@Override
@@ -143,6 +153,38 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 				googleApiClient.disconnect();
 				googleApiClient.connect();
 			}
+		}
+		if(view.getId() == R.id.ticketBoxButton) {
+			Log.i(TAG, "ticketBoxButton clicked");
+			GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+            String[] param = {gameFragment.getTicketBoxText()};
+            RegistrationBean regBean = new RegisterAsyncTask().doInBackground(param);
+            if(regBean.getData().equals("valid")) {
+                Log.i(TAG, "Registration number is valid");
+                gameFragment.register();
+                gameFragment.showTicketBox(false);
+            } else if(regBean.getData().equals("used")) {
+                Log.e(TAG, "Registration number is used");
+            } else {
+                Log.e(TAG, "Registration number is invalid");
+            }
+            Log.i(TAG,"Registration status:"+regBean.getData());
+
+		}
+	}
+
+	private class RegisterAsyncTask extends AsyncTask<String, Void, RegistrationBean> {
+
+        @Override
+		protected RegistrationBean doInBackground(String... params) {
+			try{
+				RegistrationApi.Builder builder = new RegistrationApi.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), null);
+			    RegistrationApi server = builder.build();
+                return server.getStatus(params[0]).execute();
+            } catch (Exception e) {
+                Log.e(TAG,"Could not retrieve registration status");
+			}
+			return null;
 		}
 	}
 }

@@ -52,15 +52,13 @@ public class GameFragment extends Fragment {
 	private RelativeLayout badConnectionBox;
 	private Button badConnectionButton;
 
-	private View.OnClickListener mainActivity;
-
-	private boolean registered = true; // TODO: change this
+	private Activity mainActivity;
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		try {
-			mainActivity = (View.OnClickListener) activity;
+			mainActivity = activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(mainActivity + " needs to implement View.OnClickListener");
 		}
@@ -115,10 +113,11 @@ public class GameFragment extends Fragment {
 		ticketBox = (RelativeLayout)v.findViewById(R.id.ticketBoxLayout);
 		ticketBoxText = (EditText)v.findViewById(R.id.ticketBoxEditText);
 		ticketBoxButton = (Button)v.findViewById(R.id.ticketBoxButton);
+		ticketBoxButton.setOnClickListener((View.OnClickListener)mainActivity);
 
 		badConnectionBox = (RelativeLayout)v.findViewById(R.id.badConnectionBox);
 		badConnectionButton = (Button)v.findViewById(R.id.badConnectionButton);
-        badConnectionButton.setOnClickListener(mainActivity);
+        badConnectionButton.setOnClickListener((View.OnClickListener)mainActivity);
 
         mCurrentScore.setText("" + game.getScore());
 		
@@ -140,9 +139,6 @@ public class GameFragment extends Fragment {
 	@Override
 	public void onStart(){
 		super.onStart();
-		if(!registered){
-			displayTicketBox(true);
-		}
 		if(game.gameEnded()){
 			mScanButton.setEnabled(false);
 			getFragmentManager().beginTransaction().replace(R.id.game_fragment, new EndGameFragment()).commit();
@@ -201,7 +197,7 @@ public class GameFragment extends Fragment {
 		
 	}
 
-	private void displayTicketBox(boolean show) {
+	public void showTicketBox(boolean show) {
 		if (show){
 			mScanButton.setEnabled(false);
 			ticketBox.setVisibility(RelativeLayout.VISIBLE);
@@ -228,4 +224,17 @@ public class GameFragment extends Fragment {
 		mScanButton.setEnabled(true);
 	}
 
+	public boolean isRegistered() {
+		return game.isRegistered();
+	}
+
+	public void register() {
+		game.setRegistered(true);
+	}
+
+	public String getTicketBoxText() {
+		String text = ticketBoxText.getText().toString();
+		Log.i(TAG,"ticketBoxText =" + text);
+		return text;
+	}
 }

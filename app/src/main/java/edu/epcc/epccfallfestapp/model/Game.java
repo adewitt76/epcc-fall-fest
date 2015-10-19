@@ -24,6 +24,7 @@ public class Game implements Serializable{
 	private int monstersFound;
 	private boolean gameEnded;
 	private MonsterSet monsters;
+	private boolean registered;
 
 	/**
 	 * The constructor initializes only when the game is started for the first time. After the
@@ -38,6 +39,7 @@ public class Game implements Serializable{
 		startTime = System.currentTimeMillis();
 		gameEnded = false;
 		monsters = new MonsterSet();
+		registered = false;
 	}
 
 	/**
@@ -119,5 +121,13 @@ public class Game implements Serializable{
      */
 	public void setGameEnded(boolean e) {
 		gameEnded = e;
+	}
+
+	public boolean isRegistered() {
+		return registered;
+	}
+
+	public void setRegistered(boolean registered) {
+		this.registered = registered;
 	}
 }
