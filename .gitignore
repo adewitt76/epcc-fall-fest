@@ -5,3 +5,6 @@
 .DS_Store
 /build
 /captures
+/backend/build
+/app/build
+/BaseGameUtils/build
