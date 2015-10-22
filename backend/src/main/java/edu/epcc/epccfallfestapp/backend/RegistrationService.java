@@ -22,27 +22,40 @@ import java.util.List;
 )
 public class RegistrationService {
 
+    public static final int VALID = 6401;
+    public static final int USED = 6402;
+    public static final int INVALID = 6403;
+
     private static List<RegistrationCode> regCodes = new ArrayList<>();
 
     @ApiMethod(name = "getStatus")
     public RegistrationBean getRegStatus(@Named("regCode") String regCode) {
         RegistrationBean bean = new RegistrationBean();
 
-        // Todo: add persistent registration cod list
-        regCodes.add(new RegistrationCode("g56X45"));
-        regCodes.add(new RegistrationCode("l54B42"));
-        regCodes.add(new RegistrationCode("AAAAAA"));
+        // Todo: add persistent registration code list
+        // RegistrationCode(String regCode, int month, int day, int year)
+        regCodes.add(new RegistrationCode("star-fire",10,21,2015));
+        regCodes.add(new RegistrationCode("hell-fire",10,21,2015));
+        regCodes.add(new RegistrationCode("spit-fire",10,21,2015));
+        regCodes.add(new RegistrationCode("red-fire",10,21,2015));
+        regCodes.add(new RegistrationCode("blue-fire",10,21,2015));
+        regCodes.add(new RegistrationCode("green-fire",10,21,2015));
+        regCodes.add(new RegistrationCode("im-on-fire",10,21,2015));
+        regCodes.add(new RegistrationCode("pants-on-fire",10,21,2015));
+        regCodes.add(new RegistrationCode("do-not-fire",10,21,2015));
 
-        bean.setData("invalid");
+        bean.setRegistrationCodeStatus(INVALID);
         if (!regCodes.isEmpty()) {
             for (RegistrationCode rc : regCodes) {
                 if ( rc.equals(regCode) ) {
                     if( !rc.isUsed() ) {
                         rc.setUsed(true);
-                        bean.setData("valid");
+                        bean.setRegistrationCodeStatus(VALID);
+                        bean.setEventDate(rc.getEventDate());
                         break;
                     } else {
-                        bean.setData("used");
+                        bean.setRegistrationCodeStatus(USED);
+                        bean.setEventDate(null);
                         break;
                     }
                 }

@@ -9,9 +9,11 @@
 
 package edu.epcc.epccfallfestapp.controller;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -19,15 +21,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.google.android.gms.*;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.example.games.basegameutils.BaseGameUtils;
-
-import java.io.IOException;
 
 import edu.epcc.epccfallfestapp.R;
 import edu.epcc.epccfallfestapp.backend.registrationApi.RegistrationApi;
@@ -37,7 +36,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
 	private static final String TAG = "MainActivity";
-	private RegistrationApi registar;
+    private static final int VALID = 6401;
+    private static final int USED = 6402;
+    private static final int INVALID = 6403;
+
+    private String registrationCode;
 
 	// used to establish a connection with Google
 	private GoogleApiClient googleApiClient;
@@ -50,7 +53,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 	public static FragmentManager fm;
 	public static FrameLayout frame;
-	
+
+    // handler handles thread messages
+    public static Handler handler;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,7 +79,28 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 			fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
 		}
 
-		//findViewById(R.id.badConnectionButton).setOnClickListener(this);
+        // create a handler for thread communications
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message message){
+                switch (message.what) {
+                    case VALID:
+						Log.i(TAG, "Registration number is valid");
+                        GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
+                        gameFragment.register();
+                        gameFragment.showTicketBox(false);
+                        break;
+                    case USED:
+						Log.e(TAG, "Registration number is used");
+                        break;
+                    case INVALID:
+						Log.e(TAG, "Registration number is invalid");
+                        break;
+                    default:
+                        super.handleMessage(message);
+                }
+            }
+        };
 	}
 
 	@Override
@@ -92,9 +119,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 	@Override
 	public void onConnected(Bundle bundle) {
 		Log.i(TAG, "Connection established");
-		GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
-		if(gameFragment != null) gameFragment.hideBadConnectionBox();
-		if(!gameFragment.isRegistered()) gameFragment.showTicketBox(true);
+        GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
+		if(gameFragment != null) {
+            gameFragment.hideBadConnectionBox();
+            if (!gameFragment.isRegistered()) gameFragment.showTicketBox(true);
+        }
 	}
 
 	@Override
@@ -133,7 +162,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		}
 
 		Log.e(TAG,"Connection Failed");
-		GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+        GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
 		if(gameFragment != null) {
 			Log.i(TAG,"Found gameFragment");
 			gameFragment.showBadConnectionBox();
@@ -143,10 +172,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 	@Override
 	public void onClick(View view) {
+
+        GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
+
 		if(view.getId() == R.id.badConnectionButton) {
 			Log.i(TAG, "badConnectionButton clicked");
 			if(googleApiClient.isConnected()) {
-				GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
 				if(gameFragment != null) gameFragment.hideBadConnectionBox();
 			}
 			else {
@@ -156,33 +187,33 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		}
 		if(view.getId() == R.id.ticketBoxButton) {
 			Log.i(TAG, "ticketBoxButton clicked");
-			GameFragment gameFragment = ((GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
-            String[] param = {gameFragment.getTicketBoxText()};
-            RegistrationBean regBean = new RegisterAsyncTask().doInBackground(param);
-            if(regBean.getData().equals("valid")) {
-                Log.i(TAG, "Registration number is valid");
-                gameFragment.register();
-                gameFragment.showTicketBox(false);
-            } else if(regBean.getData().equals("used")) {
-                Log.e(TAG, "Registration number is used");
-            } else {
-                Log.e(TAG, "Registration number is invalid");
-            }
-            Log.i(TAG,"Registration status:"+regBean.getData());
+			registrationCode = gameFragment.getTicketBoxText();
+            new RegisterAsyncTask().execute();
 
 		}
 	}
 
-	private class RegisterAsyncTask extends AsyncTask<String, Void, RegistrationBean> {
+    private void sendRegistrationResults(int status, RegistrationBean bean) {
+		Message message;
+		message = handler.obtainMessage(status, bean);
+		message.sendToTarget();
+    }
+
+	private class RegisterAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-		protected RegistrationBean doInBackground(String... params) {
+		protected Void doInBackground(Void... params) {
+			RegistrationBean regBean = null;
 			try{
 				RegistrationApi.Builder builder = new RegistrationApi.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), null);
 			    RegistrationApi server = builder.build();
-                return server.getStatus(params[0]).execute();
+				regBean = server.getStatus(registrationCode).execute();
             } catch (Exception e) {
-                Log.e(TAG,"Could not retrieve registration status");
+                Log.e(TAG,"Could not retrieve registration status: " + e.getClass().toString());
+			}
+			if(regBean != null) {
+				Log.i(TAG,"Registration status:"+regBean.getRegistrationCodeStatus());
+				sendRegistrationResults(regBean.getRegistrationCodeStatus(),regBean);
 			}
 			return null;
 		}
