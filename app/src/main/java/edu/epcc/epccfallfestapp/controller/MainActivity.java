@@ -87,28 +87,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 			fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
 		}
 
-        // create a handler for thread communications
-        handler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message message){
-                switch (message.what) {
-                    case VALID:
-						Log.i(TAG, "Registration number is valid");
-                        GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
-                        gameFragment.register();
-                        gameFragment.showTicketBox(false);
-                        break;
-                    case USED:
-						Log.e(TAG, "Registration number is used");
-                        break;
-                    case INVALID:
-						Log.e(TAG, "Registration number is invalid");
-                        break;
-                    default:
-                        super.handleMessage(message);
-                }
-            }
-        };
+        handler = new MessageHandler();
 	}
 
 	@Override
@@ -269,4 +248,38 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 			return null;
 		}
 	}
+
+    /**
+     * The following private static inner-class is used to listen to the main message loop. Here it
+     * is waiting for a message that is sent from our RegisterAsyncClass. The RegisterAsync object
+     * is running on it's own thread and needs to communicate safely back to our activity. That is
+     * were this Handler comes in. This class was originally an anonymous inner class, which created
+     * a memory link and kept persistent parts of the app on the device.
+     */
+    private static class MessageHandler extends Handler {
+
+        public MessageHandler() {
+            super(Looper.getMainLooper());
+        }
+
+        @Override
+        public void handleMessage(Message message){
+            switch (message.what) {
+                case VALID:
+                    Log.i(TAG, "Registration number is valid");
+                    GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
+                    gameFragment.register();
+                    gameFragment.showTicketBox(false);
+                    break;
+                case USED:
+                    Log.e(TAG, "Registration number is used");
+                    break;
+                case INVALID:
+                    Log.e(TAG, "Registration number is invalid");
+                    break;
+                default:
+                    super.handleMessage(message);
+            }
+        }
+    }
 }
