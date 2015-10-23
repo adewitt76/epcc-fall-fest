@@ -8,7 +8,7 @@
  * Author: Aaron DeWitt
 
  This is the starting point of Android applications. In comparison to Java programming this
- is the main(). Like in Java where every program needs a main() every Android app needs a
+ is the main_menu(). Like in Java where every program needs a main_menu() every Android app needs a
  AndroidManifest.xml file. The manifest file gives all the essential information the app needs
  to run. Also, it does the following:
     1) It identifies the applications package.
@@ -70,7 +70,7 @@
             combination of the two intent filters defined in Splash are Main and Launcher.
             The ACTION_MAIN intent, which is filtered by the
                 <action android:name="android.intent.Main" />
-            intent filter, makes this Activity the main entry point for our program. And, the
+            intent filter, makes this Activity the main_menu entry point for our program. And, the
             CATEGORY_LAUNCHER intent places this entry point in the top-level launcher, which
             allows the user to start the program from touching it in the launcher.
 

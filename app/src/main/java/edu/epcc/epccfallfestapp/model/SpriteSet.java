@@ -45,4 +45,10 @@ public abstract class SpriteSet implements Serializable{
         }
         return rFrag;
     }
+
+    public void resetSprites() {
+        for (Sprite sprite: sprites) {
+            sprite.reset();
+        }
+    }
 }

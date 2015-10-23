@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import edu.epcc.epccfallfestapp.R;
 
@@ -25,7 +26,14 @@ public class EndGameFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-		 View v = inflater.inflate(R.layout.end_game_fragment, parent, false);
+		View v = inflater.inflate(R.layout.end_game_fragment, parent, false);
+		RelativeLayout mMonsterLayout = (RelativeLayout)v.findViewById(R.id.end_game_fragment);
+		mMonsterLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				getFragmentManager().popBackStack();
+			}
+		});
 		return v;
 	}
 	

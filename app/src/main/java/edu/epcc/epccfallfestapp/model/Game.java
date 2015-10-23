@@ -7,7 +7,7 @@ import java.io.Serializable;
 import edu.epcc.epccfallfestapp.controller.FoundMonsterFragment;
 
 /**
- * The main model of the game. A model stores all the data for utilization by the controller.
+ * The main_menu model of the game. A model stores all the data for utilization by the controller.
  * This model stores all the information about the current state of the game for use by our
  * application. The model should be completely decoupled from the view and controller so that
  * any changes to the other components will not have an affect on it. The Game class is Serializable
@@ -129,5 +129,14 @@ public class Game implements Serializable{
 
 	public void setRegistered(boolean registered) {
 		this.registered = registered;
+	}
+
+	public void resetGame() {
+		score = 0;
+		monstersFound = 0;
+		startTime = System.currentTimeMillis();
+		gameEnded = false;
+		monsters.resetSprites();
+		registered = false;
 	}
 }

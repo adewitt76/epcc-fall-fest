@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.games.Games;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -29,7 +31,7 @@ import edu.epcc.epccfallfestapp.R;
 import edu.epcc.epccfallfestapp.model.Game;
 
 /**
- * The GameFragment is the controller for the main view of the application. This fragment
+ * The GameFragment is the controller for the main_menu view of the application. This fragment
  * links the Game object (which is the model) fragment_main.xml (which is the view). Therefor,
  * the MVC(Model,View,Controller) design pattern is established.
  *
@@ -39,6 +41,9 @@ import edu.epcc.epccfallfestapp.model.Game;
 public class GameFragment extends Fragment {
 
 	private static final String TAG = "GameFragment";
+
+	private long mScore;
+	private boolean backFromMonsterFragment;
 
 	private Game game;
 	private Button mScanButton;
@@ -52,15 +57,15 @@ public class GameFragment extends Fragment {
 	private RelativeLayout badConnectionBox;
 	private Button badConnectionButton;
 
-	private Activity mainActivity;
+	private MainActivity mCallback;
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		try {
-			mainActivity = activity;
+			mCallback = (MainActivity)activity;
 		} catch (ClassCastException e) {
-			throw new ClassCastException(mainActivity + " needs to implement View.OnClickListener");
+			throw new ClassCastException(mCallback + " needs to implement View.OnClickListener");
 		}
 	}
 
@@ -93,6 +98,32 @@ public class GameFragment extends Fragment {
 			Log.i(TAG,"Loading new game...");
 		    game = new Game();
         }
+
+		mScore = game.getScore();
+		backFromMonsterFragment = false;
+
+		getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+			@Override
+			public void onBackStackChanged() {
+				if(game.monstersFound() == 11){
+					if(backFromMonsterFragment) {
+						backFromMonsterFragment = false;
+						getFragmentManager()
+								.beginTransaction()
+								.replace(R.id.game_fragment, new EndGameFragment())
+								.addToBackStack(TAG)
+								.commit();
+						game.resetGame();
+					}
+					Log.i(TAG, "Monsters Found: " + game.monstersFound());
+					if(game.gameEnded() == false) {
+						mScanButton.setEnabled(false);
+						game.setGameEnded(true);
+						backFromMonsterFragment = true;
+					}
+				}
+			}
+		});
 	}
 	
 	@Override
@@ -113,11 +144,11 @@ public class GameFragment extends Fragment {
 		ticketBox = (RelativeLayout)v.findViewById(R.id.ticketBoxLayout);
 		ticketBoxText = (EditText)v.findViewById(R.id.ticketBoxEditText);
 		ticketBoxButton = (Button)v.findViewById(R.id.ticketBoxButton);
-		ticketBoxButton.setOnClickListener((View.OnClickListener)mainActivity);
+		ticketBoxButton.setOnClickListener((View.OnClickListener) mCallback);
 
 		badConnectionBox = (RelativeLayout)v.findViewById(R.id.badConnectionBox);
 		badConnectionButton = (Button)v.findViewById(R.id.badConnectionButton);
-        badConnectionButton.setOnClickListener((View.OnClickListener)mainActivity);
+        badConnectionButton.setOnClickListener((View.OnClickListener) mCallback);
 
         mCurrentScore.setText("" + game.getScore());
 		
@@ -139,10 +170,6 @@ public class GameFragment extends Fragment {
 	@Override
 	public void onStart(){
 		super.onStart();
-		if(game.gameEnded()){
-			mScanButton.setEnabled(false);
-			getFragmentManager().beginTransaction().replace(R.id.game_fragment, new EndGameFragment()).commit();
-		}
 	}
 
 	@Override
@@ -180,21 +207,19 @@ public class GameFragment extends Fragment {
             mCurrentScore.setText("" + game.getScore());
         }
 
-		Log.i(TAG, "Monsters Found: " + game.monstersFound());
-		if(game.monstersFound() == 11){
-			mScanButton.setEnabled(false);
-			game.setGameEnded(true);
-			Log.i(TAG,"End Game Loader");
-			getFragmentManager().beginTransaction().replace(R.id.game_fragment, new EndGameFragment()).commit();
-		}
-			
-		if(displayFragment != null)
+		if(displayFragment != null) {
 			getFragmentManager()
 					.beginTransaction()
 					.add(R.id.game_fragment, displayFragment)
 					.addToBackStack(TAG)
 					.commit();
-		
+		}
+		if(mScore != game.getScore()) {
+			mScore = game.getScore();
+			mCallback.updateLeaderboard(mScore);
+		}
+
+
 	}
 
 	public void showTicketBox(boolean show) {
@@ -236,5 +261,9 @@ public class GameFragment extends Fragment {
 		String text = ticketBoxText.getText().toString();
 		Log.i(TAG,"ticketBoxText =" + text);
 		return text;
+	}
+
+	public Game getGame() {
+		return game;
 	}
 }

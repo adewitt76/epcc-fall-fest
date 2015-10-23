@@ -26,19 +26,16 @@ public class FoundMonsterFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
 
-        int monster_resource = getArguments().getInt("monster_found");
-
+		int monster_resource = getArguments().getInt("monster_found");
 		View v = inflater.inflate(monster_resource, parent, false);
 
 		RelativeLayout mMonsterLayout = (RelativeLayout)v.findViewById(R.id.found_monster_layout);
-		
 		mMonsterLayout.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
 				getFragmentManager().popBackStack();
 			}
 		});
-		
 		return v;
 	}
 	

@@ -21,7 +21,7 @@ public class Sprite implements Serializable {
 
     private String name; // can be used to identify a sprite when info is needed
     private boolean found; // whether or not the sprite is found and should be visible
-    private transient ImageView image; // a reference to its Image that is on the main view
+    private transient ImageView image; // a reference to its Image that is on the main_menu view
     private int imageResourceID; // its image resource ID found in res\layout\fragment_main.xml
     private int spriteFragmentID; // its fragment ID found in res\layout\
     private String QRCode; // the barcode representation of the sprite
@@ -29,7 +29,7 @@ public class Sprite implements Serializable {
     /**
      * Builds a new Sprite object.
      * @param name Name used for identifying the object
-     * @param imageResourceID the id of its image on the main fragment as given in fragment_main.xml
+     * @param imageResourceID the id of its image on the main_menu fragment as given in fragment_main.xml
      * @param spriteFragmentID the id of the sprites fragment that is displayed when found
      * @param QRCode the barcode string that is used to identify the object
      */
@@ -64,7 +64,7 @@ public class Sprite implements Serializable {
     }
 
     /**
-     * This marks the monster as found and sets it's image in the main fragment to visible.
+     * This marks the monster as found and sets it's image in the main_menu fragment to visible.
      */
     public void found() {
         found = true;
@@ -91,5 +91,10 @@ public class Sprite implements Serializable {
             if (found) image.setVisibility(ImageView.VISIBLE);
             else image.setVisibility(ImageView.INVISIBLE);
         }
+    }
+
+    public void reset(){
+        found = false;
+        image.setVisibility(ImageView.INVISIBLE);
     }
 }

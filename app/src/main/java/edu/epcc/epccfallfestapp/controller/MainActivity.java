@@ -18,12 +18,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.leaderboard.LeaderboardVariant;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.example.games.basegameutils.BaseGameUtils;
@@ -36,14 +40,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
 	private static final String TAG = "MainActivity";
+    private static final String LEADERS_BOARD_ID = "CgkI4by30bMIEAIQCA";
     private static final int VALID = 6401;
     private static final int USED = 6402;
     private static final int INVALID = 6403;
 
-    private String registrationCode;
+    private String mRegistrationCode;
+    private Menu mMenu;
+
+    private long leaderBoardScore;
 
 	// used to establish a connection with Google
-	private GoogleApiClient googleApiClient;
+	private GoogleApiClient mGoogleApiClient;
 
 	// The following variables are used when a connection fails
 	private static int RC_SIGN_IN = 9001;
@@ -62,7 +70,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		super.onCreate(savedInstanceState);
 
 		// Create the Google Api Client with access to the Play Games services
-		googleApiClient = new GoogleApiClient.Builder(this)
+		mGoogleApiClient = new GoogleApiClient.Builder(this)
 				.addConnectionCallbacks(this)
 				.addOnConnectionFailedListener(this)
 				.addApi(Games.API).addScope(Games.SCOPE_GAMES)
@@ -104,15 +112,39 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+        this.mMenu = menu;
+		MenuInflater inflator = getMenuInflater();
+		inflator.inflate(R.menu.main_menu, menu);
+		return true;
+	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_leaders_board){
+            if (isSignedIn()) {
+                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, LEADERS_BOARD_ID,
+                        LeaderboardVariant.TIME_SPAN_DAILY, LeaderboardVariant.COLLECTION_PUBLIC),0);
+            } else {
+                BaseGameUtils.makeSimpleDialog(this, "Leader's board not available").show();
+            }
+        }
+        if(item.getItemId() == R.id.action_sign_out){
+
+        }
+        return false;
+    }
+
+	@Override
 	public void onStart() {
 		super.onStart();
-		googleApiClient.connect();
+		mGoogleApiClient.connect();
 	}
 
 	@Override
 	public void onStop() {
 		super.onStop();
-		googleApiClient.disconnect();
+		mGoogleApiClient.disconnect();
 	}
 
 	// The following are part of the Google APIs
@@ -124,7 +156,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             gameFragment.hideBadConnectionBox();
             if (!gameFragment.isRegistered()) gameFragment.showTicketBox(true);
         }
-	}
+
+        mMenu.findItem(R.id.action_leaders_board).setEnabled(true);
+        if(leaderBoardScore < gameFragment.getGame().getScore()) {
+            leaderBoardScore = gameFragment.getGame().getScore();
+            Games.Leaderboards.submitScore(mGoogleApiClient, LEADERS_BOARD_ID, leaderBoardScore);
+        }
+    }
 
 	@Override
 	public void onConnectionSuspended(int i) {
@@ -155,13 +193,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 			// error string in your strings.xml file, such as "There was
 			// an issue with sign in, please try again later."
 			if (!BaseGameUtils.resolveConnectionFailure(this,
-					googleApiClient, connectionResult,
+                    mGoogleApiClient, connectionResult,
 					RC_SIGN_IN, "Cannot connect to Google APIs")) {
 				mResolvingConnectionFailure = false;
 			}
 		}
 
-		Log.e(TAG,"Connection Failed");
+		Log.e(TAG, "Connection Failed");
         GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
 		if(gameFragment != null) {
 			Log.i(TAG,"Found gameFragment");
@@ -177,21 +215,35 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 		if(view.getId() == R.id.badConnectionButton) {
 			Log.i(TAG, "badConnectionButton clicked");
-			if(googleApiClient.isConnected()) {
+			if(mGoogleApiClient.isConnected()) {
 				if(gameFragment != null) gameFragment.hideBadConnectionBox();
 			}
 			else {
-				googleApiClient.disconnect();
-				googleApiClient.connect();
+				mGoogleApiClient.disconnect();
+				mGoogleApiClient.connect();
 			}
 		}
 		if(view.getId() == R.id.ticketBoxButton) {
 			Log.i(TAG, "ticketBoxButton clicked");
-			registrationCode = gameFragment.getTicketBoxText();
+			mRegistrationCode = gameFragment.getTicketBoxText();
             new RegisterAsyncTask().execute();
 
 		}
 	}
+
+    public void updateLeaderboard(long score) {
+        if(isSignedIn()) {
+            if(leaderBoardScore < score) {
+                leaderBoardScore = score;
+                Games.Leaderboards.submitScore(mGoogleApiClient, LEADERS_BOARD_ID, score);
+            }
+        } else if(mGoogleApiClient == null) Log.e(TAG,"mGoogleApiClient is NULL");
+        else Log.e(TAG,"mGoogleApiClient is not connected");
+    }
+
+    private boolean isSignedIn() {
+        return (mGoogleApiClient != null && mGoogleApiClient.isConnected());
+    }
 
     private void sendRegistrationResults(int status, RegistrationBean bean) {
 		Message message;
@@ -200,14 +252,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 	private class RegisterAsyncTask extends AsyncTask<Void, Void, Void> {
-
         @Override
 		protected Void doInBackground(Void... params) {
 			RegistrationBean regBean = null;
 			try{
 				RegistrationApi.Builder builder = new RegistrationApi.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), null);
 			    RegistrationApi server = builder.build();
-				regBean = server.getStatus(registrationCode).execute();
+				regBean = server.getStatus(mRegistrationCode).execute();
             } catch (Exception e) {
                 Log.e(TAG,"Could not retrieve registration status: " + e.getClass().toString());
 			}

@@ -43,6 +43,15 @@ public class RegistrationService {
         regCodes.add(new RegistrationCode("im-on-fire",10,21,2015));
         regCodes.add(new RegistrationCode("pants-on-fire",10,21,2015));
         regCodes.add(new RegistrationCode("do-not-fire",10,21,2015));
+        regCodes.add(new RegistrationCode("star-ice",10,21,2015));
+        regCodes.add(new RegistrationCode("hell-ice",10,21,2015));
+        regCodes.add(new RegistrationCode("spit-ice",10,21,2015));
+        regCodes.add(new RegistrationCode("red-ice",10,21,2015));
+        regCodes.add(new RegistrationCode("blue-ice",10,21,2015));
+        regCodes.add(new RegistrationCode("green-ice",10,21,2015));
+        regCodes.add(new RegistrationCode("im-on-ice",10,21,2015));
+        regCodes.add(new RegistrationCode("pants-on-ice",10,21,2015));
+        regCodes.add(new RegistrationCode("do-not-ice",10,21,2015));
 
         bean.setRegistrationCodeStatus(INVALID);
         if (!regCodes.isEmpty()) {
