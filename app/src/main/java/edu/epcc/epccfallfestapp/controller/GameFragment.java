@@ -20,6 +20,8 @@ import com.google.android.gms.games.Games;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -56,6 +58,11 @@ public class GameFragment extends Fragment {
 
 	private RelativeLayout badConnectionBox;
 	private Button badConnectionButton;
+
+	private RelativeLayout invalidTicketBox;
+	private TextView invalidTicketTextView;
+	private TextView invalidTicketDescTextView;
+	private Button invalidTicketButton;
 
 	private MainActivity mCallback;
 
@@ -105,8 +112,8 @@ public class GameFragment extends Fragment {
 		getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
 			@Override
 			public void onBackStackChanged() {
-				if(game.monstersFound() == 11){
-					if(backFromMonsterFragment) {
+				if (game.monstersFound() == 11) {
+					if (backFromMonsterFragment) {
 						backFromMonsterFragment = false;
 						getFragmentManager()
 								.beginTransaction()
@@ -116,7 +123,7 @@ public class GameFragment extends Fragment {
 						game.resetGame();
 					}
 					Log.i(TAG, "Monsters Found: " + game.monstersFound());
-					if(game.gameEnded() == false) {
+					if (game.gameEnded() == false) {
 						mScanButton.setEnabled(false);
 						game.setGameEnded(true);
 						backFromMonsterFragment = true;
@@ -144,11 +151,17 @@ public class GameFragment extends Fragment {
 		ticketBox = (RelativeLayout)v.findViewById(R.id.ticketBoxLayout);
 		ticketBoxText = (EditText)v.findViewById(R.id.ticketBoxEditText);
 		ticketBoxButton = (Button)v.findViewById(R.id.ticketBoxButton);
-		ticketBoxButton.setOnClickListener((View.OnClickListener) mCallback);
+		ticketBoxButton.setOnClickListener(mCallback);
 
 		badConnectionBox = (RelativeLayout)v.findViewById(R.id.badConnectionBox);
 		badConnectionButton = (Button)v.findViewById(R.id.badConnectionButton);
-        badConnectionButton.setOnClickListener((View.OnClickListener) mCallback);
+        badConnectionButton.setOnClickListener(mCallback);
+
+		invalidTicketBox = (RelativeLayout)v.findViewById(R.id.invalidTicket);
+		invalidTicketTextView = (TextView)v.findViewById(R.id.invalidTicketTextView);
+		invalidTicketDescTextView = (TextView)v.findViewById(R.id.invalidTicketDescTextView);
+		invalidTicketButton = (Button)v.findViewById(R.id.invalidTicketOkButton);
+		invalidTicketButton.setOnClickListener(mCallback);
 
         mCurrentScore.setText("" + game.getScore());
 		
@@ -236,17 +249,36 @@ public class GameFragment extends Fragment {
 		}
 	}
 
-	public void showBadConnectionBox() {
-        Log.e(TAG,"In showBadConnectionBox()");
-		mScanButton.setEnabled(false);
-		badConnectionBox.setVisibility(RelativeLayout.VISIBLE);
-		badConnectionButton.setEnabled(true);
+	public void showBadConnectionBox(boolean show) {
+		if (show) {
+			mScanButton.setEnabled(false);
+			badConnectionBox.setVisibility(RelativeLayout.VISIBLE);
+			badConnectionButton.setEnabled(true);
+		} else {
+			badConnectionButton.setEnabled(false);
+			badConnectionBox.setVisibility(RelativeLayout.INVISIBLE);
+			mScanButton.setEnabled(true);
+		}
 	}
 
-	public void hideBadConnectionBox() {
-		badConnectionButton.setEnabled(false);
-		badConnectionBox.setVisibility(RelativeLayout.INVISIBLE);
-		mScanButton.setEnabled(true);
+	public void setInvalidTicketBox(String setting) {
+		if (setting.equals("invalid")) {
+			invalidTicketTextView.setText(R.string.invalid_ticket);
+			invalidTicketDescTextView.setText(R.string.invalid_ticket_description);
+		} else if (setting.equals("used")) {
+			invalidTicketTextView.setText(R.string.used_ticket);
+			invalidTicketDescTextView.setText(R.string.used_ticket_description);
+		}
+	}
+
+	public void showInvalidTicketBox(boolean show) {
+		if (show) {
+			invalidTicketBox.setVisibility(RelativeLayout.VISIBLE);
+			invalidTicketButton.setEnabled(true);
+		} else {
+			invalidTicketButton.setEnabled(false);
+			invalidTicketBox.setVisibility(RelativeLayout.INVISIBLE);
+		}
 	}
 
 	public boolean isRegistered() {

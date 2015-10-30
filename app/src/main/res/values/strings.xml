@@ -9,6 +9,7 @@
     <string name="photo_button">Scan!!!</string>
 	<string name="generic_description">generic description</string>
 	<string name="score">SCORE: </string>
+	<string name="ok">Ok</string>
 	<string name="score_init">0</string>
 	
 	<string name="found_alien">You found the Alien!!!</string>
@@ -26,10 +27,18 @@
 	<string name="ticket_number">Ticket Number:</string>
 	<string name="ticket_button">Go!!!</string>
 
-	<string name="bad_connection">Connection not established:</string>
+	<string name="bad_connection">Google sign in needed:</string>
 	<string name="bad_connection_description">A connection with a Google account is required to play this game.
-	Please try to sign-in again.</string>
+		Please sign in to your Google account.</string>
 	<string name="bad_connection_button">Sign-in</string>
+
+	<string name="invalid_ticket">Invalid Ticket</string>
+	<string name="invalid_ticket_description">The ticket number you entered is not a valid ticket number.
+        If you have not done so please purchase a valid ticket from the CSIT both.</string>
+
+	<string name="used_ticket">Used Ticket</string>
+	<string name="used_ticket_description">The ticket you are attempting to use had already been used.
+		Please purchase a valid ticket from the CSIT both.</string>
 
 	<string name="signin_other_error">There was an error signing in. Please try again later</string>
 <!-- TODO: Remove or change this placeholder text -->

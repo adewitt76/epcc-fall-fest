@@ -132,7 +132,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		Log.i(TAG, "Connection established");
         GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
 		if(gameFragment != null) {
-            gameFragment.hideBadConnectionBox();
+            gameFragment.showBadConnectionBox(false);
             if (!gameFragment.isRegistered()) gameFragment.showTicketBox(true);
         }
 
@@ -182,7 +182,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
 		if(gameFragment != null) {
 			Log.i(TAG,"Found gameFragment");
-			gameFragment.showBadConnectionBox();
+			gameFragment.showBadConnectionBox(true);
 		}
 		else Log.e(TAG,"gameFragment == null");
 	}
@@ -195,18 +195,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 		if(view.getId() == R.id.badConnectionButton) {
 			Log.i(TAG, "badConnectionButton clicked");
 			if(mGoogleApiClient.isConnected()) {
-				if(gameFragment != null) gameFragment.hideBadConnectionBox();
+				if(gameFragment != null) gameFragment.showBadConnectionBox(false);
 			}
 			else {
 				mGoogleApiClient.disconnect();
 				mGoogleApiClient.connect();
 			}
 		}
+
 		if(view.getId() == R.id.ticketBoxButton) {
 			Log.i(TAG, "ticketBoxButton clicked");
 			mRegistrationCode = gameFragment.getTicketBoxText();
             new RegisterAsyncTask().execute();
+		}
 
+		if(view.getId() == R.id.invalidTicketOkButton) {
+			gameFragment.showInvalidTicketBox(false);
 		}
 	}
 
@@ -264,22 +268,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         @Override
         public void handleMessage(Message message){
+			GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
             switch (message.what) {
                 case VALID:
                     Log.i(TAG, "Registration number is valid");
-                    GameFragment gameFragment = ((GameFragment)fm.findFragmentById(R.id.fragmentContainer));
                     gameFragment.register();
                     gameFragment.showTicketBox(false);
                     break;
                 case USED:
                     Log.e(TAG, "Registration number is used");
+					gameFragment.setInvalidTicketBox("used");
+					gameFragment.showInvalidTicketBox(true);
                     break;
                 case INVALID:
                     Log.e(TAG, "Registration number is invalid");
-                    break;
+                    gameFragment.setInvalidTicketBox("invalid");
+					gameFragment.showInvalidTicketBox(true);
+					break;
                 default:
                     super.handleMessage(message);
             }
+			gameFragment = null;
         }
     }
 }

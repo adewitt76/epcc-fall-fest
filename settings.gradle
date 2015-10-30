@@ -1,1 +1,1 @@
-include ':app', ':backend', ':BaseGameUtils'
+include ':app', ':backend', ':BaseGameUtils', ':codegenerator'

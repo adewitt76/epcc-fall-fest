@@ -1,17 +1,29 @@
 package edu.epcc.epccfallfestapp.backend;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+
 /**
  * Created by adewi on 10/20/2015.
  */
+@Entity
 public class RegistrationCode {
 
+    @Id
     private String regCode;
     private Date eventDate;
     private boolean used;
+
+    public RegistrationCode() {
+        regCode = null;
+        eventDate = null;
+        used = false;
+    }
 
     public RegistrationCode(String regCode, int month, int day, int year) {
         this.regCode = regCode;
@@ -20,6 +32,8 @@ public class RegistrationCode {
         eventDate = new Date(date.getTimeInMillis());
         used = false;
     }
+
+    public String getRegCode() { return regCode; }
 
     public Date getEventDate() {
         return eventDate;

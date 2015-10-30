@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/BaseGameUtils/BaseGameUtils.iml" filepath="$PROJECT_DIR$/BaseGameUtils/BaseGameUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/backend/backend.iml" filepath="$PROJECT_DIR$/backend/backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/codegenerator/codegenerator.iml" filepath="$PROJECT_DIR$/codegenerator/codegenerator.iml" />
       <module fileurl="file://$PROJECT_DIR$/epcc-fall-fest.iml" filepath="$PROJECT_DIR$/epcc-fall-fest.iml" />
     </modules>
   </component>

@@ -257,7 +257,7 @@
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:text="@string/ticket_number"
 			android:id="@+id/ticketTextView"
-			android:textColor="@color/red"
+			android:textColor="@color/white"
 			android:textSize="@dimen/ticket_size"
 			android:typeface="serif"
 			android:layout_marginTop="20dp"
@@ -276,6 +276,7 @@
 			android:layout_below="@id/ticketTextView"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="15dp"
+			android:maxLength="6"
 			android:enabled="false" />
 
 		<Button
@@ -316,7 +317,7 @@
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:text="@string/bad_connection"
 			android:id="@+id/badConnectionTextView"
-			android:textColor="@color/red"
+			android:textColor="@color/white"
 			android:textSize="18dp"
 			android:typeface="serif"
 			android:layout_marginTop="20dp"
@@ -328,6 +329,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="@string/bad_connection_description"
+			android:textColor="@color/white"
 			android:id="@+id/badConnectionDescTextView"
 			android:typeface="serif"
 			android:layout_below="@id/badConnectionTextView"
@@ -346,6 +348,64 @@
 			android:layout_alignRight="@+id/badConnectionDescTextView"
 			android:layout_alignEnd="@+id/badConnectionDescTextView"
 			android:layout_marginTop="15dp"
+			android:background="@android:color/darker_gray"
+			android:enabled="false" />
+
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:layout_width="300dp"
+		android:layout_height="200dp"
+		android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/invalidTicket"
+		android:visibility="invisible"
+		>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ticket_box"
+			android:layout_centerVertical="true"
+			android:layout_centerHorizontal="true" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:text="@string/invalid_ticket"
+			android:id="@+id/invalidTicketTextView"
+			android:textColor="@color/white"
+			android:textSize="18dp"
+			android:typeface="serif"
+			android:layout_marginTop="20dp"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true" />
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="@string/invalid_ticket_description"
+			android:textColor="@color/white"
+			android:id="@+id/invalidTicketDescTextView"
+			android:typeface="serif"
+			android:layout_below="@id/invalidTicketTextView"
+			android:layout_marginTop="10dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			/>
+
+		<Button
+			style="@style/Theme.Holoween"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/ok"
+			android:id="@+id/invalidTicketOkButton"
+			android:layout_below="@+id/invalidTicketDescTextView"
+			android:layout_alignRight="@+id/invalidTicketDescTextView"
+			android:layout_alignEnd="@+id/invalidTicketDescTextView"
+			android:layout_marginTop="5dp"
 			android:background="@android:color/darker_gray"
 			android:enabled="false" />
 

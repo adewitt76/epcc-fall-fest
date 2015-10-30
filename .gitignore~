@@ -8,3 +8,5 @@
 /backend/build
 /app/build
 /BaseGameUtils/build
+/app/app.iml
+/backend/backend.iml

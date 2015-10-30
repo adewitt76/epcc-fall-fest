@@ -1,6 +1,11 @@
 package edu.epcc.epccfallfestapp.model;
 
+import android.os.Parcel;
 import android.view.View;
+
+import com.google.android.gms.games.snapshot.Snapshot;
+import com.google.android.gms.games.snapshot.SnapshotContents;
+import com.google.android.gms.games.snapshot.SnapshotMetadata;
 
 import java.io.Serializable;
 
@@ -15,7 +20,7 @@ import edu.epcc.epccfallfestapp.controller.FoundMonsterFragment;
  *
  * Author: Aaron DeWitt adewitt76@gmail.com
  */
-public class Game implements Serializable{
+public class Game implements Serializable {
 		
 	private static final long serialVersionUID = 9203770842176328248L;
 
@@ -139,4 +144,5 @@ public class Game implements Serializable{
 		monsters.resetSprites();
 		registered = false;
 	}
+
 }
