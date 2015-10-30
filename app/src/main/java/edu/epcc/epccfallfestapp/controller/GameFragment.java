@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.games.Games;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -64,6 +63,9 @@ public class GameFragment extends Fragment {
 	private TextView invalidTicketDescTextView;
 	private Button invalidTicketButton;
 
+    private RelativeLayout gameCompleteDialog;
+    private TextView gameCompleteScore;
+
 	private MainActivity mCallback;
 
 	@Override
@@ -110,27 +112,28 @@ public class GameFragment extends Fragment {
 		backFromMonsterFragment = false;
 
 		getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-			@Override
-			public void onBackStackChanged() {
-				if (game.monstersFound() == 11) {
-					if (backFromMonsterFragment) {
-						backFromMonsterFragment = false;
-						getFragmentManager()
-								.beginTransaction()
-								.replace(R.id.game_fragment, new EndGameFragment())
-								.addToBackStack(TAG)
-								.commit();
-						game.resetGame();
-					}
-					Log.i(TAG, "Monsters Found: " + game.monstersFound());
-					if (game.gameEnded() == false) {
-						mScanButton.setEnabled(false);
-						game.setGameEnded(true);
-						backFromMonsterFragment = true;
-					}
-				}
-			}
-		});
+            @Override
+            public void onBackStackChanged() {
+                if (game.monstersFound() == 11) {
+                    if (backFromMonsterFragment) {
+                        backFromMonsterFragment = false;
+                        getFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.game_fragment, new EndGameFragment())
+                                .addToBackStack(TAG)
+                                .commit();
+                        game.setGameCompleted(true);
+                        showGameCompleteDialog(true);
+                    }
+                    Log.i(TAG, "Monsters Found: " + game.monstersFound());
+                    if (game.gameEnded() == false) {
+                        mScanButton.setEnabled(false);
+                        game.setGameEnded(true);
+                        backFromMonsterFragment = true;
+                    }
+                }
+            }
+        });
 	}
 	
 	@Override
@@ -163,6 +166,9 @@ public class GameFragment extends Fragment {
 		invalidTicketButton = (Button)v.findViewById(R.id.invalidTicketOkButton);
 		invalidTicketButton.setOnClickListener(mCallback);
 
+        gameCompleteDialog = (RelativeLayout)v.findViewById(R.id.gameCompleteDialog);
+        gameCompleteScore = (TextView)v.findViewById(R.id.gameCompleteDialogScoreTextView);
+
         mCurrentScore.setText("" + game.getScore());
 		
 		mScanButton = (Button)v.findViewById(R.id.photoButton);
@@ -176,7 +182,10 @@ public class GameFragment extends Fragment {
 				}catch(Exception e){ e.printStackTrace(); }
 			}
 		});
-		
+
+        if(game.isGameCompleted()) showGameCompleteDialog(true);
+        else showGameCompleteDialog(false);
+
 		return v;
 	}
 
@@ -280,6 +289,17 @@ public class GameFragment extends Fragment {
 			invalidTicketBox.setVisibility(RelativeLayout.INVISIBLE);
 		}
 	}
+
+    public void showGameCompleteDialog(boolean show)  {
+        if (show) {
+            mScanButton.setEnabled(false);
+            gameCompleteScore.setText("Your score: " + game.getScore());
+            gameCompleteDialog.setVisibility(RelativeLayout.VISIBLE);
+        } else {
+            gameCompleteDialog.setVisibility(RelativeLayout.INVISIBLE);
+            mScanButton.setEnabled(true);
+        }
+    }
 
 	public boolean isRegistered() {
 		return game.isRegistered();

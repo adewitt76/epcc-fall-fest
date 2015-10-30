@@ -411,4 +411,61 @@
 
 	</RelativeLayout>
 
+	<RelativeLayout
+		android:layout_width="300dp"
+		android:layout_height="200dp"
+		android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/gameCompleteDialog"
+		android:visibility="visible"
+		>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ticket_box"
+			android:layout_centerVertical="true"
+			android:layout_centerHorizontal="true" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:text="@string/game_complete"
+			android:id="@+id/gameCompleteDialogTextView"
+			android:textColor="@color/white"
+			android:textSize="18dp"
+			android:typeface="serif"
+			android:layout_marginTop="10dp"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true" />
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="@string/game_complete_description"
+			android:textColor="@color/white"
+			android:id="@+id/gameCompleteDialogDescTextView"
+			android:typeface="serif"
+			android:layout_below="@id/gameCompleteDialogTextView"
+			android:layout_marginTop="10dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			/>
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="@string/game_complete_score_description"
+			android:textColor="@color/white"
+			android:id="@+id/gameCompleteDialogScoreTextView"
+			android:typeface="serif"
+			android:layout_below="@id/gameCompleteDialogDescTextView"
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			/>
+
+	</RelativeLayout>
 </RelativeLayout>

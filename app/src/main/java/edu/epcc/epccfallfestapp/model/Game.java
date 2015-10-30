@@ -30,6 +30,7 @@ public class Game implements Serializable {
 	private boolean gameEnded;
 	private MonsterSet monsters;
 	private boolean registered;
+	private boolean gameCompleted;
 
 	/**
 	 * The constructor initializes only when the game is started for the first time. After the
@@ -45,6 +46,7 @@ public class Game implements Serializable {
 		gameEnded = false;
 		monsters = new MonsterSet();
 		registered = false;
+		gameCompleted = false;
 	}
 
 	/**
@@ -134,6 +136,14 @@ public class Game implements Serializable {
 
 	public void setRegistered(boolean registered) {
 		this.registered = registered;
+	}
+
+	public boolean isGameCompleted() {
+		return gameCompleted;
+	}
+
+	public void setGameCompleted(boolean gameCompleted) {
+		this.gameCompleted = gameCompleted;
 	}
 
 	public void resetGame() {
